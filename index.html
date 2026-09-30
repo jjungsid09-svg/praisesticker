@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>칭찬 스티커판</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cork-a:#b57f4f;
+    --cork-b:#a06c3e;
+    --frame:#6b4226;
+    --ink:#3b2a1e;
+    --ink-soft:#6b5644;
+    --paper:#fffdf7;
+    --cat-teamwork:#8fc7e0;
+    --cat-teamwork-d:#4f9ab8;
+    --cat-care:#f4a6c1;
+    --cat-care-d:#d9739a;
+    --cat-kind:#ffd873;
+    --cat-kind-d:#e0a83a;
+    --cat-diligent:#a8d98a;
+    --cat-diligent-d:#6fae4c;
+    --cat-challenge:#c7a8e0;
+    --cat-challenge-d:#9269bb;
+    --hdr-text:#fdf3e4;
+    --hdr-text-shadow:rgba(0,0,0,0.3);
+    --tab-bg:rgba(255,255,255,0.28);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Gowun Dodum', sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    padding: 0 0 60px;
+    transition: background 0.3s ease;
+  }
+
+  /* ---- 배경 테마 ---- */
+  body.theme-cork{
+    --frame:#6b4226;
+    --hdr-text:#fdf3e4;
+    --hdr-text-shadow:rgba(0,0,0,0.3);
+    --tab-bg:rgba(255,255,255,0.28);
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 0 2px, transparent 2px),
+      radial-gradient(circle at 60% 70%, rgba(0,0,0,0.06) 0 2px, transparent 2px),
+      radial-gradient(circle at 80% 20%, rgba(255,255,255,0.04) 0 2px, transparent 2px),
+      radial-gradient(circle at 40% 85%, rgba(0,0,0,0.05) 0 2px, transparent 2px),
+      linear-gradient(135deg, #b57f4f, #a06c3e);
+    background-size: 60px 60px, 70px 70px, 50px 50px, 65px 65px, cover;
+  }
+  body.theme-sky{
+    --frame:#2b6f92;
+    --hdr-text:#264a5e;
+    --hdr-text-shadow:rgba(255,255,255,0.5);
+    --tab-bg:rgba(255,255,255,0.55);
+    background-color:#8ec9e6;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.65) 8px, transparent 9px),
+      linear-gradient(160deg, #cdeaf7, #8ec9e6);
+    background-size: 34px 34px, cover;
+  }
+  body.theme-mint{
+    --frame:#2f7a52;
+    --hdr-text:#245c3d;
+    --hdr-text-shadow:rgba(255,255,255,0.5);
+    --tab-bg:rgba(255,255,255,0.55);
+    background-color:#a6ddba;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.35) 0 14px, transparent 14px 28px),
+      linear-gradient(160deg, #c7ecd4, #8fd0aa);
+  }
+  body.theme-lavender{
+    --frame:#6a4a8f;
+    --hdr-text:#5a3b73;
+    --hdr-text-shadow:rgba(255,255,255,0.5);
+    --tab-bg:rgba(255,255,255,0.55);
+    background-color:#e6d5f0;
+    background-image:
+      linear-gradient(90deg, rgba(255,255,255,0.55) 50%, transparent 50%),
+      linear-gradient(rgba(255,255,255,0.55) 50%, transparent 50%);
+    background-size: 24px 24px;
+  }
+  body.theme-lemon{
+    --frame:#8a6a1e;
+    --hdr-text:#7a6a1e;
+    --hdr-text-shadow:rgba(255,255,255,0.6);
+    --tab-bg:rgba(0,0,0,0.06);
+    background-color:#fdf6d8;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.07) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+  body.theme-night{
+    --frame:#4a3f7a;
+    --hdr-text:#f2f0ff;
+    --hdr-text-shadow:rgba(0,0,0,0.5);
+    --tab-bg:rgba(255,255,255,0.15);
+    background-color:#1b2340;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1.6px);
+    background-size: 40px 40px;
+  }
+
+  header{
+    text-align:center;
+    padding: 36px 16px 18px;
+  }
+  .sign{
+    display:inline-block;
+    background: var(--frame);
+    color:#fff2df;
+    font-family:'Jua', sans-serif;
+    font-size: clamp(28px, 5vw, 44px);
+    padding: 14px 40px;
+    border-radius: 6px;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.15), 0 14px 18px rgba(0,0,0,0.25);
+    position:relative;
+    transform: rotate(-1deg);
+  }
+  .sign::before, .sign::after{
+    content:"";
+    position:absolute;
+    top:-10px;
+    width:14px; height:14px;
+    border-radius:50%;
+    background:#d8cbb8;
+    box-shadow: inset -2px -2px 3px rgba(0,0,0,0.35), 0 2px 3px rgba(0,0,0,0.4);
+  }
+  .sign::before{ left:14px; }
+  .sign::after{ right:14px; }
+  .tagline{
+    margin-top:14px;
+    color:var(--hdr-text);
+    font-size:15px;
+    text-shadow: 0 1px 2px var(--hdr-text-shadow);
+  }
+
+  .layout{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 10px 20px 0;
+    display:grid;
+    grid-template-columns: 300px 1fr;
+    gap: 26px;
+    align-items:start;
+  }
+  @media (max-width: 860px){
+    .layout{ grid-template-columns: 1fr; }
+  }
+
+  .page-tabs{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin: 4px 0 18px;
+  }
+  .page-tab-btn{
+    font-family:'Gowun Dodum', sans-serif;
+    font-size:13.5px;
+    padding:9px 20px;
+    border-radius:20px;
+    border:none;
+    cursor:pointer;
+    background: var(--tab-bg);
+    color:var(--hdr-text);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.22);
+  }
+  .page-tab-btn.active{
+    background: var(--frame);
+    color:#fff2df;
+  }
+
+  .page-inner{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 10px 20px 40px;
+  }
+
+  .hof-intro{
+    text-align:center;
+    color:var(--hdr-text);
+    margin-bottom:22px;
+    text-shadow: 0 1px 2px var(--hdr-text-shadow);
+  }
+  .hof-intro h2{
+    font-family:'Jua', sans-serif;
+    font-size:26px;
+    margin:0 0 6px;
+  }
+  .hof-intro p{ font-size:13.5px; margin:0; }
+
+  .hof-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap:18px;
+  }
+  .hof-card{
+    border-radius: 10px;
+    padding: 24px 14px 16px;
+    text-align:center;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+    position:relative;
+    border: 2px solid transparent;
+  }
+  .hof-card.pastel-0{ background: linear-gradient(160deg, #fff0f5, #ffd6e5); border-color:#e8a0bd; }
+  .hof-card.pastel-1{ background: linear-gradient(160deg, #f0faff, #cdeaf7); border-color:#7ab8d9; }
+  .hof-card.pastel-2{ background: linear-gradient(160deg, #f2fbf3, #c7ecd4); border-color:#7fc99a; }
+  .hof-card.pastel-3{ background: linear-gradient(160deg, #f7f0fb, #e6d5f0); border-color:#b494cf; }
+  .hof-card.pastel-4{ background: linear-gradient(160deg, #fff5ea, #ffe0c2); border-color:#e0a868; }
+  .hof-card.pastel-5{ background: linear-gradient(160deg, #fff8e6, #ffe9b0); border-color:#e0b34d; }
+  .hof-crown{ font-size:30px; margin-bottom:8px; }
+  .hof-month{ font-size:12px; color:var(--ink-soft); margin-bottom:6px; letter-spacing:0.02em; }
+  .hof-students-wrap{ display:flex; flex-direction:column; gap:14px; }
+  .hof-student{ position:relative; }
+  .hof-student + .hof-student{
+    border-top:1px dashed rgba(0,0,0,0.14);
+    padding-top:14px;
+  }
+  .hof-name{ font-family:'Jua', sans-serif; font-size:20px; color:var(--frame); }
+  .hof-count{ font-size:11.5px; color:var(--ink-soft); margin-top:4px; }
+  .hof-summary{ font-size:11.5px; color:var(--ink-soft); margin-top:8px; line-height:1.4; }
+  .hof-del{
+    position:absolute; top:-2px; right:-2px;
+    width:22px; height:22px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.55);
+    border:none; cursor:pointer;
+    color:var(--ink-soft); font-size:12px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hof-empty{
+    color:var(--hdr-text);
+    text-align:center;
+    padding:30px 20px;
+    font-size:14px;
+    text-shadow: 0 1px 2px var(--hdr-text-shadow);
+  }
+  .hof-stats-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap:18px;
+    max-width:700px;
+    margin:0 auto 14px;
+  }
+  .week-highlight-card{
+    border-radius:12px;
+    padding:22px 16px;
+    text-align:center;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+  }
+  .week-highlight-card.receiver{
+    background: linear-gradient(160deg, #fff8e6, #ffe9b0);
+    border: 2px solid #e0b34d;
+  }
+  .week-highlight-card.giver{
+    background: linear-gradient(160deg, #eaf6ff, #bfe3f5);
+    border: 2px solid #7ab8d9;
+  }
+  .week-highlight-card .wh-icon{ font-size:30px; margin-bottom:6px; }
+  .week-highlight-card .wh-label{ font-size:12px; color:var(--ink-soft); margin-bottom:4px; }
+  .week-highlight-card .wh-name{ font-family:'Jua', sans-serif; font-size:21px; color:var(--frame); }
+  .week-highlight-card .wh-count{ font-size:11.5px; color:var(--ink-soft); margin-top:4px; }
+
+  /* ---- 학기말 리포트 ---- */
+  .report-modal{ max-width:560px; }
+  .report-header{ text-align:center; margin-bottom:16px; }
+  .report-header h2{
+    font-family:'Jua', sans-serif;
+    color:var(--frame);
+    margin:0 0 4px;
+    font-size:22px;
+  }
+  .report-date{ font-size:12px; color:var(--ink-soft); margin:0; }
+  .report-cat-summary{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .report-cat-item{
+    background:#f7f1e3;
+    border-radius:8px;
+    padding:8px 6px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .report-cat-item strong{ font-size:15px; color:var(--frame); }
+  .report-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    max-height:50vh;
+    overflow-y:auto;
+  }
+  .report-entry{
+    border:1px solid #ecdfc4;
+    border-radius:8px;
+    padding:10px 12px;
+  }
+  .report-entry-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:4px;
+  }
+  .report-entry-date{ font-size:11px; color:var(--ink-soft); }
+  .report-entry-msg{ font-size:13px; color:var(--ink); }
+  .report-entry-giver{ font-size:11px; color:var(--ink-soft); margin-top:4px; text-align:right; }
+
+  @media print{
+    body *{ visibility:hidden; }
+    #reportContent, #reportContent *{ visibility:visible; }
+    #reportContent{
+      position:fixed; inset:0; margin:0; padding:24px;
+      background:#fff; overflow:visible;
+    }
+    .no-print{ display:none !important; }
+    .report-list{ max-height:none; overflow:visible; }
+  }
+
+  .panel{
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 20px 18px 22px;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+    position:relative;
+  }
+  .panel::before{
+    content:"";
+    position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:16px; height:16px; border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, #ff8a7a, #c23b2b 70%);
+    box-shadow: 0 3px 4px rgba(0,0,0,0.4);
+  }
+  .panel h2{
+    font-family:'Jua', sans-serif;
+    font-size:20px;
+    margin: 4px 0 16px;
+    color: var(--frame);
+  }
+  .field{ margin-bottom:14px; }
+  .field label{
+    display:block;
+    font-size:13px;
+    color: var(--ink-soft);
+    margin-bottom:5px;
+  }
+  select, textarea, input[type=text], input[type=date]{
+    width:100%;
+    font-family:'Gowun Dodum', sans-serif;
+    font-size:14px;
+    padding:9px 10px;
+    border-radius:6px;
+    border:1px solid #e0d7c6;
+    background:#fffefb;
+    color:var(--ink);
+  }
+  textarea{ resize:vertical; min-height:54px; }
+
+  .cat-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:8px;
+  }
+  .cat-btn{
+    border:2px solid transparent;
+    border-radius:8px;
+    padding:8px 4px;
+    font-family:'Gowun Dodum', sans-serif;
+    font-size:12.5px;
+    cursor:pointer;
+    color:#3b2a1e;
+    text-align:center;
+    line-height:1.3;
+  }
+  .cat-btn.selected{ border-color: var(--frame); box-shadow: 0 2px 6px rgba(0,0,0,0.2) inset; }
+  .cat-teamwork-btn{ background: var(--cat-teamwork); }
+  .cat-care-btn{ background: var(--cat-care); }
+  .cat-kind-btn{ background: var(--cat-kind); }
+  .cat-diligent-btn{ background: var(--cat-diligent); }
+  .cat-challenge-btn{ background: var(--cat-challenge); }
+
+  .submit-btn{
+    width:100%;
+    margin-top:6px;
+    padding:11px;
+    border:none;
+    border-radius: 8px;
+    background: var(--frame);
+    color:#fff2df;
+    font-family:'Jua', sans-serif;
+    font-size:16px;
+    cursor:pointer;
+    transition: transform 0.12s ease;
+  }
+  .submit-btn:active{ transform: scale(0.97); }
+  .submit-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+  .hint{ font-size:12px; color:var(--ink-soft); margin-top:8px; text-align:center; }
+
+  .board-wrap{ min-height:200px; }
+
+  .top-row{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .growth-banner{
+    background: linear-gradient(160deg, #fff8e6, #eef7e0);
+    border: 2px solid #cde0a8;
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:18px;
+    text-align:center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.22);
+  }
+  .growth-line1{
+    font-size:13px;
+    color: var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .growth-line1 strong{
+    color: var(--frame);
+    font-size:16px;
+  }
+  .growth-line2{
+    font-family:'Jua', sans-serif;
+    font-size:16px;
+    color: var(--frame);
+  }
+
+  .rank-panel{
+    background: var(--paper);
+    border-radius:4px;
+    padding:16px 18px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.22);
+    flex:1;
+    min-width:240px;
+  }
+  .rank-panel h3{
+    font-family:'Jua', sans-serif;
+    font-size:16px;
+    margin:0 0 10px;
+    color:var(--frame);
+  }
+  .rank-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    padding:5px 0;
+    border-bottom: 1px dashed #e5dcc9;
+  }
+  .rank-item:last-child{ border-bottom:none; }
+  .rank-num{
+    width:22px; height:22px; border-radius:50%;
+    background: var(--cat-kind);
+    color:var(--frame);
+    font-family:'Jua', sans-serif;
+    font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .rank-name{ flex:1; font-weight:600; }
+  .rank-count{ color:var(--ink-soft); font-size:12.5px; }
+  .rank-tied{ font-size:10px; color:var(--ink-soft); font-weight:400; }
+
+  .board{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+    align-items:start;
+  }
+
+  .name-card{
+    background: var(--paper);
+    border-radius: 3px;
+    padding: 16px 16px 10px;
+    box-shadow: 3px 6px 10px rgba(0,0,0,0.28);
+    position:relative;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .name-card.clickable{ cursor:pointer; }
+  .name-card.clickable:hover{
+    transform: translateY(-3px);
+    box-shadow: 5px 10px 16px rgba(0,0,0,0.32);
+  }
+  .more-hint{
+    text-align:center;
+    font-size:11.5px;
+    color: var(--ink-soft);
+    padding:8px 0 2px;
+    margin-top:4px;
+    border-top: 1px dashed #efe7d8;
+  }
+  .name-card::before{
+    content:"";
+    position:absolute; top:-7px; left:50%; transform:translateX(-50%);
+    width:13px; height:13px; border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, #ffe08a, #b8860b 70%);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.45);
+  }
+  .name-card .name-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom: 2px dashed #e5dcc9;
+    padding-bottom:8px;
+    margin-bottom:6px;
+  }
+  .name-card .name-header .name{
+    font-family:'Jua', sans-serif;
+    font-size:19px;
+    color: var(--frame);
+  }
+  .name-card .name-header .count{
+    font-size:11.5px;
+    color: var(--ink-soft);
+  }
+  .entry{
+    display:flex;
+    gap:8px;
+    padding:8px 0;
+    border-bottom: 1px dashed #efe7d8;
+    font-size:13px;
+    line-height:1.45;
+  }
+  .entry:last-child{ border-bottom:none; }
+  .entry.new{ animation: fadein 0.4s ease; }
+  @keyframes fadein{
+    from{ opacity:0; transform: translateY(-6px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  .tag{
+    flex-shrink:0;
+    align-self:flex-start;
+    padding:3px 8px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+    white-space:nowrap;
+    color: var(--frame);
+    display:inline-block;
+  }
+  .tag.cat-teamwork{ background: var(--cat-teamwork); }
+  .tag.cat-care{ background: var(--cat-care); }
+  .tag.cat-kind{ background: var(--cat-kind); }
+  .tag.cat-diligent{ background: var(--cat-diligent); }
+  .tag.cat-challenge{ background: var(--cat-challenge); }
+  .entry .body{ flex:1; min-width:0; }
+  .entry .msg{ color: var(--ink); }
+  .entry .msg.placeholder{ color: var(--ink-soft); font-style:italic; }
+  .entry .sub-line{
+    display:flex;
+    justify-content:space-between;
+    gap:6px;
+    margin-top:3px;
+    font-size:11px;
+    color: rgba(59,42,30,0.55);
+  }
+  .entry .del-btn{
+    background:none; border:none; cursor:pointer;
+    color: rgba(59,42,30,0.55);
+    font-size:14px;
+    line-height:1;
+    flex-shrink:0;
+    padding:2px 4px;
+  }
+  .empty-entry{
+    font-size:12.5px;
+    color: var(--ink-soft);
+    padding:8px 0;
+  }
+
+  .empty-msg{
+    color:var(--hdr-text);
+    text-align:center;
+    padding: 40px 20px;
+    font-size:14px;
+    text-shadow: 0 1px 2px var(--hdr-text-shadow);
+  }
+
+  .teacher-fab{
+    position:fixed;
+    bottom:18px; right:18px;
+    background: var(--frame);
+    color:#fff2df;
+    border:none;
+    border-radius:24px;
+    padding:11px 18px;
+    font-family:'Gowun Dodum', sans-serif;
+    font-size:13px;
+    cursor:pointer;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+    z-index:50;
+  }
+
+  .modal-overlay{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:100;
+    padding:20px;
+  }
+  .modal-overlay.open{ display:flex; }
+  #confirmOverlay{ z-index:150; }
+  .modal{
+    background:var(--paper);
+    border-radius:8px;
+    padding:22px;
+    max-width:440px;
+    width:100%;
+    max-height:85vh;
+    overflow-y:auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+  .modal h3{
+    font-family:'Jua', sans-serif;
+    color:var(--frame);
+    margin-top:0;
+  }
+  .modal label{ font-size:13px; color:var(--ink-soft); display:block; margin:14px 0 5px; }
+  .modal input[type=password], .modal textarea{
+    width:100%;
+    padding:9px 10px;
+    border-radius:6px;
+    border:1px solid #e0d7c6;
+    font-family:'Gowun Dodum', sans-serif;
+    font-size:14px;
+  }
+  .modal textarea{ min-height:110px; }
+  .modal-actions{
+    display:flex; gap:8px; margin-top:18px; flex-wrap:wrap;
+  }
+  .modal-actions button{
+    flex:1;
+    padding:10px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-family:'Gowun Dodum', sans-serif;
+    font-size:13.5px;
+  }
+  .btn-primary{ background: var(--frame); color:#fff2df; }
+  .btn-secondary{ background:#e9e1d2; color:var(--ink); }
+  .btn-danger{ background:#c23b2b; color:#fff2df; }
+  .close-x{
+    position:absolute; top:16px; right:18px;
+    background:none; border:none; font-size:18px; cursor:pointer; color:var(--ink-soft);
+  }
+  .modal{ position:relative; }
+  .student-list-mini{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    max-height:120px;
+    overflow-y:auto;
+    border:1px solid #e0d7c6;
+    border-radius:6px;
+    padding:8px 10px;
+    margin-top:8px;
+  }
+  .tab-row{ display:flex; gap:6px; margin-bottom:6px; }
+  .tab-btn{
+    flex:1; padding:8px; border-radius:6px; border:1px solid #e0d7c6;
+    background:#fffefb; cursor:pointer; font-size:13px; font-family:'Gowun Dodum', sans-serif;
+  }
+  .tab-btn.active{ background: var(--frame); color:#fff2df; border-color:var(--frame); }
+  .tab-body{ display:none; }
+  .tab-body.active{ display:block; }
+
+  .theme-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:12px;
+    margin-top:6px;
+  }
+  .theme-swatch{
+    border:3px solid transparent;
+    border-radius:10px;
+    padding:0;
+    cursor:pointer;
+    overflow:hidden;
+    text-align:center;
+    background:#fffefb;
+  }
+  .theme-swatch.selected{ border-color: var(--frame); }
+  .theme-swatch .swatch-preview{
+    height:44px;
+    width:100%;
+  }
+  .theme-swatch .swatch-label{
+    display:block;
+    font-size:11px;
+    padding:5px 2px;
+    color:var(--ink-soft);
+    font-family:'Gowun Dodum', sans-serif;
+  }
+  .swatch-cork{
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08) 0 2px, transparent 2px),
+      linear-gradient(135deg, #b57f4f, #a06c3e);
+    background-size: 14px 14px, cover;
+  }
+  .swatch-sky{
+    background:
+      radial-gradient(circle, rgba(255,255,255,0.7) 3px, transparent 3.5px),
+      linear-gradient(160deg, #cdeaf7, #8ec9e6);
+    background-size: 12px 12px, cover;
+  }
+  .swatch-mint{
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.4) 0 5px, transparent 5px 10px),
+      linear-gradient(160deg, #c7ecd4, #8fd0aa);
+  }
+  .swatch-lavender{
+    background-color:#e6d5f0;
+    background-image:
+      linear-gradient(90deg, rgba(255,255,255,0.6) 50%, transparent 50%),
+      linear-gradient(rgba(255,255,255,0.6) 50%, transparent 50%);
+    background-size: 8px 8px;
+  }
+  .swatch-lemon{
+    background-color:#fdf6d8;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 9px 9px;
+  }
+  .swatch-night{
+    background-color:#1b2340;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1.5px);
+    background-size: 13px 13px;
+  }
+
+  .toast{
+    position:fixed;
+    left:50%; bottom:22px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--frame);
+    color:#fff2df;
+    padding:11px 22px;
+    border-radius:24px;
+    font-size:13.5px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index:200;
+    max-width:82vw;
+    text-align:center;
+  }
+  .toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
+
+  .confirm-modal{ max-width:340px; }
+  .confirm-modal p{ font-size:14px; color:var(--ink); margin:6px 0 0; }
+</style>
+</head>
+<body class="theme-cork">
+<datalist id="studentNamesList"></datalist>
+
+<header>
+  <div class="sign">칭찬 스티커판</div>
+  <div class="tagline">친구의 좋은 행동을 발견하면, 스티커를 붙여주세요 🌱</div>
+</header>
+
+<div class="page-tabs">
+  <button class="page-tab-btn active" data-page="board">🏅 칭찬 게시판</button>
+  <button class="page-tab-btn" data-page="hof">🏆 명예의 전당</button>
+  <button class="page-tab-btn" data-page="cumulative">👑 누적 칭찬왕</button>
+</div>
+
+<div id="pageBoard">
+<div class="layout">
+  <div class="panel" id="formPanel">
+    <h2>스티커 붙이기</h2>
+    <div class="field">
+      <label>주는 사람</label>
+      <input type="text" id="giverInput" list="studentNamesList" placeholder="이름을 입력하세요" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>받는 사람</label>
+      <input type="text" id="receiverInput" list="studentNamesList" placeholder="이름을 입력하세요" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>어떤 점이 칭찬할 만했나요?</label>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+    <div class="field">
+      <label>날짜</label>
+      <input type="date" id="dateInput">
+    </div>
+    <div class="field">
+      <label>하고 싶은 말 (60자 이내)</label>
+      <textarea id="msgInput" maxlength="60" placeholder="예: 준비물을 안 가져왔을 때 빌려줘서 고마웠어"></textarea>
+    </div>
+    <button class="submit-btn" id="submitBtn">스티커 붙이기</button>
+    <div class="hint" id="statusHint">연결 중...</div>
+  </div>
+
+  <div class="board-wrap">
+    <div class="growth-banner" id="growthBanner"></div>
+    <div class="top-row">
+      <div class="rank-panel">
+        <h3>🏅 이번 달 칭찬왕</h3>
+        <div id="rankList"><div class="rank-item">아직 스티커가 없어요</div></div>
+      </div>
+    </div>
+    <div class="board" id="board"></div>
+    <div class="empty-msg" id="emptyMsg" style="display:none;">아직 등록된 학생이 없어요. 선생님 모드에서 우리반 명단을 먼저 등록해주세요!</div>
+  </div>
+</div>
+</div>
+
+<div id="pageHof" style="display:none;">
+  <div class="page-inner">
+    <div class="hof-intro">
+      <h2>🏆 명예의 전당</h2>
+      <p>매달 칭찬을 가장 많이 받은 친구가 이름을 올려요!</p>
+    </div>
+    <div class="hof-grid" id="hofBoard"></div>
+  </div>
+</div>
+
+<div id="pageCumulative" style="display:none;">
+  <div class="page-inner">
+    <div class="hof-intro">
+      <h2>👑 누적 칭찬왕</h2>
+      <p>처음부터 지금까지의 기록이에요!</p>
+    </div>
+    <div class="hof-stats-grid" id="hofStatsGrid"></div>
+  </div>
+</div>
+
+<button class="teacher-fab" id="teacherFab">🖇 선생님</button>
+
+<!-- 선생님 로그인 모달 -->
+<div class="modal-overlay" id="loginOverlay">
+  <div class="modal">
+    <button class="close-x" data-close="loginOverlay">✕</button>
+    <h3>선생님 모드</h3>
+    <label>비밀번호</label>
+    <input type="password" id="pwInput" placeholder="비밀번호 입력">
+    <div class="modal-actions">
+      <button class="btn-primary" id="pwSubmit">확인</button>
+    </div>
+    <div class="hint" id="pwError" style="color:#c23b2b; display:none; margin-top:8px;">비밀번호가 틀렸어요.</div>
+  </div>
+</div>
+
+<!-- 선생님 관리 모달 -->
+<div class="modal-overlay" id="teacherOverlay">
+  <div class="modal">
+    <button class="close-x" data-close="teacherOverlay">✕</button>
+    <div style="display:flex; align-items:baseline; justify-content:space-between; padding-right:26px;">
+      <h3 style="margin:0;">선생님 관리</h3>
+      <button id="logoutBtn" style="background:none; border:none; color:var(--ink-soft); font-size:12px; cursor:pointer; text-decoration:underline; padding:0; white-space:nowrap;">로그아웃</button>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="roster">우리반 명단</button>
+      <button class="tab-btn" data-tab="give">대신 붙이기</button>
+      <button class="tab-btn" data-tab="manage">스티커 관리</button>
+      <button class="tab-btn" data-tab="hof">명예의 전당</button>
+      <button class="tab-btn" data-tab="theme">배경</button>
+      <button class="tab-btn" data-tab="report">리포트</button>
+    </div>
+
+    <div class="tab-body active" id="tab-roster">
+      <label>학생 이름 (한 줄에 한 명씩)</label>
+      <textarea id="rosterInput" placeholder="김민준&#10;이서연&#10;박도윤&#10;..."></textarea>
+      <div class="modal-actions">
+        <button class="btn-primary" id="rosterSave">명단 저장</button>
+      </div>
+      <div class="student-list-mini" id="rosterPreview">등록된 학생이 없습니다.</div>
+    </div>
+
+    <div class="tab-body" id="tab-give">
+      <label>주는 사람 (비워두면 "선생님"으로 표시)</label>
+      <input type="text" id="tGiverInput" list="studentNamesList" placeholder="비워두면 선생님으로 표시" autocomplete="off">
+      <label>받는 사람</label>
+      <input type="text" id="tReceiverInput" list="studentNamesList" placeholder="이름을 입력하세요" autocomplete="off">
+      <label>항목</label>
+      <div class="cat-grid" id="tCatGrid"></div>
+      <label>날짜</label>
+      <input type="date" id="tDateInput">
+      <label>메시지 (60자 이내)</label>
+      <textarea id="tMsgInput" maxlength="60"></textarea>
+      <div class="modal-actions">
+        <button class="btn-primary" id="tSubmitBtn">스티커 붙이기</button>
+      </div>
+    </div>
+
+    <div class="tab-body" id="tab-manage">
+      <p class="hint" style="text-align:left;">스티커를 눌러 하나씩 지우려면 게시판의 각 스티커 아래 '지우기'를 이용하세요.</p>
+      <label>새 달 시작하기</label>
+      <p class="hint" style="text-align:left; margin-top:0;">지금까지 받은 스티커를 학생 화면에서 숨겨요. 기록은 지워지지 않아요.</p>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="hideAllBtn">지금까지 받은 스티커 숨기기</button>
+      </div>
+      <div class="modal-actions" id="unhideRow" style="display:none;">
+        <button class="btn-secondary" id="unhideAllBtn">숨긴 스티커 다시 보이기</button>
+      </div>
+      <label style="margin-top:18px;">완전 삭제</label>
+      <p class="hint" style="text-align:left; margin-top:0;">되돌릴 수 없어요. 정말 필요할 때만 사용하세요.</p>
+      <div class="modal-actions">
+        <button class="btn-danger" id="resetAllBtn">모든 스티커 완전 삭제</button>
+      </div>
+    </div>
+
+    <div class="tab-body" id="tab-hof">
+      <p class="hint" style="text-align:left;">이번 달 1등: <strong id="hofSuggestName">-</strong> (<span id="hofSuggestCount">0</span>개)</p>
+      <label>올릴 학생</label>
+      <select id="hofNameSelect"></select>
+      <label>표시할 월</label>
+      <input type="text" id="hofMonthLabel" placeholder="예: 2026년 9월">
+      <div class="modal-actions">
+        <button class="btn-primary" id="hofAddBtn">명예의 전당에 올리기</button>
+      </div>
+      <label style="margin-top:14px;">등록된 기록</label>
+      <div class="student-list-mini" id="hofListPreview">아직 등록된 기록이 없습니다.</div>
+    </div>
+
+    <div class="tab-body" id="tab-theme">
+      <p class="hint" style="text-align:left;">배경을 바꾸면 모든 기기에 똑같이 적용돼요.</p>
+      <div class="theme-grid" id="themeGrid">
+        <button class="theme-swatch" data-theme="cork">
+          <div class="swatch-preview swatch-cork"></div>
+          <span class="swatch-label">코르크보드</span>
+        </button>
+        <button class="theme-swatch" data-theme="sky">
+          <div class="swatch-preview swatch-sky"></div>
+          <span class="swatch-label">하늘 물방울</span>
+        </button>
+        <button class="theme-swatch" data-theme="mint">
+          <div class="swatch-preview swatch-mint"></div>
+          <span class="swatch-label">민트 줄무늬</span>
+        </button>
+        <button class="theme-swatch" data-theme="lavender">
+          <div class="swatch-preview swatch-lavender"></div>
+          <span class="swatch-label">라벤더 체크</span>
+        </button>
+        <button class="theme-swatch" data-theme="lemon">
+          <div class="swatch-preview swatch-lemon"></div>
+          <span class="swatch-label">레몬 그리드</span>
+        </button>
+        <button class="theme-swatch" data-theme="night">
+          <div class="swatch-preview swatch-night"></div>
+          <span class="swatch-label">밤하늘 반짝</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="tab-body" id="tab-report">
+      <p class="hint" style="text-align:left;">학생별로 지금까지 받은 칭찬을 정리해서 보여줘요. 학부모 상담 때 인쇄해서 쓰기 좋아요.</p>
+      <label>학생 선택</label>
+      <select id="reportStudentSelect"></select>
+      <div class="modal-actions">
+        <button class="btn-primary" id="reportViewBtn">리포트 보기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 확인 모달 (브라우저 기본 confirm 대신 사용) -->
+<div class="modal-overlay" id="confirmOverlay">
+  <div class="modal confirm-modal">
+    <h3>확인해주세요</h3>
+    <p id="confirmMessage"></p>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="confirmCancelBtn">취소</button>
+      <button class="btn-danger" id="confirmOkBtn">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 학기말 리포트 -->
+<div class="modal-overlay" id="reportOverlay">
+  <div class="modal report-modal">
+    <button class="close-x no-print" data-close="reportOverlay">✕</button>
+    <div id="reportContent"></div>
+    <div class="modal-actions no-print">
+      <button class="btn-secondary" id="reportPrintBtn">🖨 인쇄하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 학생 카드 전체보기 -->
+<div class="modal-overlay" id="studentDetailOverlay">
+  <div class="modal report-modal">
+    <button class="close-x" data-close="studentDetailOverlay">✕</button>
+    <div id="studentDetailContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+/* ============================================================
+   설정: 아래 firebaseConfig를 선생님의 Firebase 프로젝트 값으로
+   바꿔주세요. (짝꿍칠판/글쓰기 앱과 같은 방식으로 새 프로젝트를
+   하나 만들어서 Realtime Database를 사용하시면 됩니다.)
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "여기에_API_KEY",
+  authDomain: "여기에_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://여기에_PROJECT_ID-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "여기에_PROJECT_ID",
+  storageBucket: "여기에_PROJECT_ID.appspot.com",
+  messagingSenderId: "여기에_SENDER_ID",
+  appId: "여기에_APP_ID"
+};
+
+// 선생님 모드 비밀번호 - 원하는 값으로 바꿔서 사용하세요.
+const TEACHER_PASSWORD = "0521";
+
+const CATEGORIES = [
+  { id:"teamwork",  label:"🤝 협동", cls:"cat-teamwork" },
+  { id:"care",      label:"💗 배려", cls:"cat-care" },
+  { id:"kind",      label:"🌼 친절", cls:"cat-kind" },
+  { id:"diligent",  label:"🌟 성실", cls:"cat-diligent" },
+  { id:"challenge", label:"🚀 도전", cls:"cat-challenge" },
+];
+
+let app, db;
+let students = {};      // id -> name
+let stickers = {};      // id -> {giver, receiver, catId, msg, date, ts}
+let hallOfFame = {};     // id -> {name, monthLabel, ts}
+let hiddenBefore = 0;    // stickers with ts <= this are hidden from students
+let isTeacher = false;
+let selectedCat = null;
+let tSelectedCat = null;
+let renderedIds = new Set();
+let lastMonthRanking = [];
+
+/* ---------- 알림/확인 (알림창 대신 화면 안에서 처리) ---------- */
+let toastTimer = null;
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove("show"), 2200);
+}
+
+let confirmCallback = null;
+function showConfirm(message, onConfirm){
+  document.getElementById("confirmMessage").textContent = message;
+  confirmCallback = onConfirm;
+  document.getElementById("confirmOverlay").classList.add("open");
+}
+document.getElementById("confirmCancelBtn").addEventListener("click", ()=>{
+  document.getElementById("confirmOverlay").classList.remove("open");
+  confirmCallback = null;
+});
+document.getElementById("confirmOkBtn").addEventListener("click", ()=>{
+  document.getElementById("confirmOverlay").classList.remove("open");
+  const cb = confirmCallback;
+  confirmCallback = null;
+  if(cb) cb();
+});
+
+
+function initFirebase(){
+  try{
+    app = firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    db.ref(".info/connected").on("value", snap=>{
+      document.getElementById("statusHint").textContent =
+        snap.val() ? "연결됨" : "연결 중...";
+    });
+    db.ref("students").on("value", snap=>{
+      students = snap.val() || {};
+      renderRosterDependentUI();
+    });
+    db.ref("stickers").on("value", snap=>{
+      stickers = snap.val() || {};
+      renderBoard();
+      renderRank();
+      renderCumulativeStats();
+      renderGrowthBanner();
+      renderHallOfFame();
+    });
+    db.ref("hallOfFame").on("value", snap=>{
+      hallOfFame = snap.val() || {};
+      renderHallOfFame();
+    });
+    db.ref("hiddenBefore").on("value", snap=>{
+      hiddenBefore = snap.val() || 0;
+      const row = document.getElementById("unhideRow");
+      if(row) row.style.display = hiddenBefore > 0 ? "" : "none";
+      renderBoard();
+      renderRank();
+      renderGrowthBanner();
+    });
+    db.ref("theme").on("value", snap=>{
+      applyTheme(snap.val() || "cork");
+    });
+  }catch(e){
+    document.getElementById("statusHint").textContent =
+      "Firebase 설정이 필요해요 (코드 상단 firebaseConfig 확인)";
+    console.error(e);
+  }
+}
+
+/* ---------- 카테고리 버튼 렌더 ---------- */
+function buildCatGrid(container, onSelect){
+  container.innerHTML = "";
+  CATEGORIES.forEach(c=>{
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `cat-btn ${c.cls}-btn`;
+    btn.textContent = c.label;
+    btn.dataset.cat = c.id;
+    btn.addEventListener("click", ()=>{
+      [...container.children].forEach(b=>b.classList.remove("selected"));
+      btn.classList.add("selected");
+      onSelect(c.id);
+    });
+    container.appendChild(btn);
+  });
+}
+buildCatGrid(document.getElementById("catGrid"), id=>{ selectedCat = id; });
+buildCatGrid(document.getElementById("tCatGrid"), id=>{ tSelectedCat = id; });
+
+/* ---------- 명단 의존 UI ---------- */
+function renderRosterDependentUI(){
+  const names = Object.entries(students).sort((a,b)=>a[1].localeCompare(b[1],'ko',{numeric:true}));
+
+  const dataList = document.getElementById("studentNamesList");
+  dataList.innerHTML = names.map(([id,name])=> `<option value="${escapeHtml(name)}">`).join("");
+
+  const preview = document.getElementById("rosterPreview");
+  preview.textContent = names.length
+    ? names.map(n=>n[1]).join(", ")
+    : "등록된 학생이 없습니다.";
+
+  renderBoard();
+}
+
+/* ---------- 학생 폼 ---------- */
+const giverInput = document.getElementById("giverInput");
+const receiverInput = document.getElementById("receiverInput");
+const submitBtn = document.getElementById("submitBtn");
+const msgInput = document.getElementById("msgInput");
+const dateInput = document.getElementById("dateInput");
+
+function todayStr(){
+  const d = new Date();
+  const off = d.getTimezoneOffset();
+  return new Date(d.getTime() - off*60000).toISOString().slice(0,10);
+}
+dateInput.value = todayStr();
+
+submitBtn.addEventListener("click", ()=>{
+  const giverName = giverInput.value.trim();
+  const receiverName = receiverInput.value.trim();
+
+  if(!giverName){
+    showToast("주는 사람 이름을 입력해주세요!");
+    return;
+  }
+  if(!receiverName){
+    showToast("받는 사람 이름을 입력해주세요!");
+    return;
+  }
+  if(giverName === receiverName){
+    showToast("스스로에게는 붙일 수 없어요. 친구 이름을 입력해주세요!");
+    return;
+  }
+  if(!Object.values(students).includes(receiverName)){
+    showToast("받는 사람 이름을 우리반 명단에서 정확히 입력해주세요!");
+    return;
+  }
+  if(!selectedCat){
+    showToast("어떤 점이 칭찬할 만했는지 골라주세요!");
+    return;
+  }
+  if(!dateInput.value){
+    showToast("날짜를 선택해주세요!");
+    return;
+  }
+  if(!msgInput.value.trim()){
+    showToast("하고 싶은 말을 적어주세요!");
+    return;
+  }
+  addSticker({
+    giverName,
+    receiverName,
+    catId: selectedCat,
+    date: dateInput.value,
+    msg: msgInput.value.trim()
+  });
+  msgInput.value = "";
+  selectedCat = null;
+  [...document.querySelectorAll("#catGrid .cat-btn")].forEach(b=>b.classList.remove("selected"));
+  giverInput.value = ""; receiverInput.value = "";
+  dateInput.value = todayStr();
+  showToast("스티커를 붙였어요! 🎉");
+});
+
+function addSticker(data){
+  if(!db) return;
+  db.ref("stickers").push({
+    giver: data.giverName || "선생님",
+    receiver: data.receiverName,
+    catId: data.catId,
+    msg: data.msg || "",
+    date: data.date || todayStr(),
+    ts: Date.now()
+  });
+}
+
+/* ---------- 게시판 렌더 ---------- */
+function catInfo(id){ return CATEGORIES.find(c=>c.id===id) || CATEGORIES[0]; }
+
+function formatDateDisplay(dateStr){
+  if(!dateStr) return "";
+  const [y,m,d] = dateStr.split("-").map(Number);
+  const dt = new Date(y, m-1, d);
+  const weekday = ["일","월","화","수","목","금","토"][dt.getDay()];
+  return `${m}월 ${d}일 (${weekday})`;
+}
+
+function renderEntryRow(id, s){
+  const c = catInfo(s.catId);
+  const hidden = (s.ts||0) <= hiddenBefore;
+  return `
+    <div class="entry${renderedIds.has(id) ? "" : " new"}"${hidden ? ' style="opacity:0.45;"' : ""}>
+      <div class="tag ${c.cls}">${c.label}</div>
+      <div class="body">
+        <div class="msg${s.msg ? "" : " placeholder"}">${s.msg ? escapeHtml(s.msg) : "따로 남긴 말은 없어요"}</div>
+        <div class="sub-line">
+          <span>${isTeacher ? escapeHtml(s.giver) + " · " : ""}${formatDateDisplay(s.date)}${hidden ? " · (숨김)" : ""}</span>
+          ${isTeacher ? `<button class="del-btn" data-id="${id}" title="삭제">✕</button>` : ""}
+        </div>
+      </div>
+    </div>`;
+}
+
+function getStudentEntries(name){
+  let entries = Object.entries(stickers).filter(([id,s])=> s.receiver === name);
+  if(!isTeacher){
+    entries = entries.filter(([id,s])=> (s.ts||0) > hiddenBefore);
+  }
+  entries.sort((a,b)=> (b[1].date||"").localeCompare(a[1].date||"") || b[1].ts - a[1].ts);
+  return entries;
+}
+
+function wireDelButtons(container){
+  container.querySelectorAll(".del-btn").forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      showConfirm("이 스티커를 지울까요?", ()=>{
+        db.ref("stickers/"+btn.dataset.id).remove();
+      });
+    });
+  });
+}
+
+let currentDetailName = null;
+
+function openStudentDetail(name, entries){
+  currentDetailName = name;
+  const content = document.getElementById("studentDetailContent");
+  const list = entries.length
+    ? entries.map(([id,s])=> renderEntryRow(id, s)).join("")
+    : `<div class="empty-entry">아직 받은 칭찬이 없어요</div>`;
+  content.innerHTML = `
+    <div class="report-header">
+      <h2>${escapeHtml(name)}</h2>
+      <p class="report-date">총 ${entries.length}개 받음</p>
+    </div>
+    <div class="report-list" style="max-height:62vh;">${list}</div>
+  `;
+  wireDelButtons(content);
+  document.getElementById("studentDetailOverlay").classList.add("open");
+}
+
+function refreshStudentDetailIfOpen(){
+  const overlay = document.getElementById("studentDetailOverlay");
+  if(!overlay.classList.contains("open") || !currentDetailName) return;
+  openStudentDetail(currentDetailName, getStudentEntries(currentDetailName));
+}
+
+function renderBoard(){
+  const board = document.getElementById("board");
+  const names = Object.entries(students).sort((a,b)=>a[1].localeCompare(b[1],'ko',{numeric:true}));
+
+  document.getElementById("emptyMsg").style.display = names.length ? "none" : "block";
+  board.innerHTML = "";
+
+  names.forEach(([studentId, name])=>{
+    const myEntries = getStudentEntries(name);
+
+    const visibleCount = myEntries.filter(([id,s])=> (s.ts||0) > hiddenBefore).length;
+    const shown = myEntries.slice(0, 2);
+    const remaining = myEntries.length - shown.length;
+
+    const card = document.createElement("div");
+    card.className = "name-card" + (myEntries.length ? " clickable" : "");
+    const rot = (Math.random()*3-1.5).toFixed(1);
+    card.style.transform = `rotate(${rot}deg)`;
+
+    const header = `
+      <div class="name-header">
+        <span class="name">${escapeHtml(name)}</span>
+        <span class="count">${visibleCount}개</span>
+      </div>`;
+
+    const body = shown.length
+      ? shown.map(([id,s])=> renderEntryRow(id, s)).join("")
+      : `<div class="empty-entry">아직 받은 칭찬이 없어요</div>`;
+
+    const moreHint = remaining > 0
+      ? `<div class="more-hint">+${remaining}개 더보기</div>`
+      : "";
+
+    card.innerHTML = header + body + moreHint;
+    board.appendChild(card);
+
+    if(myEntries.length){
+      card.addEventListener("click", (e)=>{
+        if(e.target.closest(".del-btn")) return;
+        openStudentDetail(name, myEntries);
+      });
+    }
+
+    myEntries.forEach(([id])=> renderedIds.add(id));
+  });
+
+  wireDelButtons(board);
+  refreshStudentDetailIfOpen();
+}
+
+function escapeHtml(str){
+  const d = document.createElement("div");
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function currentMonthStr(){
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0");
+}
+
+/* ---------- 랭킹 (이번 달) ---------- */
+function assignCompetitionRanks(sortedEntries){
+  // sortedEntries: [[name, count], ...] already sorted desc by count
+  let prevCount = null, prevRank = 0;
+  return sortedEntries.map(([name, count], idx)=>{
+    const rank = (count === prevCount) ? prevRank : idx + 1;
+    prevCount = count;
+    prevRank = rank;
+    return { name, count, rank };
+  });
+}
+
+/* ---------- 이번 달 칭찬 성장 배너 ---------- */
+function getGrowthStage(count){
+  if(count <= 10) return "🌱 칭찬 새싹이 움트고 있어요.";
+  if(count <= 20) return "🌿 칭찬 새싹이 무럭무럭 자라고 있어요.";
+  if(count <= 35) return "🌳 칭찬 나무가 튼튼하게 자랐어요.";
+  if(count <= 50) return "🌸 칭찬 나무에 꽃이 활짝 폈어요.";
+  if(count <= 80) return "🍎 칭찬 나무에 열매가 주렁주렁 열렸어요.";
+  return "🌟 칭찬이 넘쳐나는 최고의 반이에요!";
+}
+
+function renderGrowthBanner(){
+  const nowMonth = currentMonthStr();
+  const count = Object.values(stickers).filter(s=>
+    (s.ts||0) > hiddenBefore && s.date && s.date.startsWith(nowMonth)
+  ).length;
+  const month = new Date().getMonth() + 1;
+  const el = document.getElementById("growthBanner");
+  if(el){
+    el.innerHTML = `
+      <div class="growth-line1">${month}월 1일부터 오늘까지, 칭찬 스티커가 <strong>${count}개</strong>나 모였어요!</div>
+      <div class="growth-line2">${getGrowthStage(count)}</div>
+    `;
+  }
+}
+
+function renderRank(){
+  const nowMonth = currentMonthStr();
+  const counts = {};
+  Object.values(stickers).forEach(s=>{
+    if((s.ts||0) <= hiddenBefore) return;
+    if(!s.date || !s.date.startsWith(nowMonth)) return;
+    counts[s.receiver] = (counts[s.receiver]||0) + 1;
+  });
+  const allSorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  lastMonthRanking = allSorted;
+
+  const ranked = assignCompetitionRanks(allSorted);
+  const top5 = ranked.filter(item=> item.rank <= 5);
+
+  const list = document.getElementById("rankList");
+  if(!top5.length){
+    list.innerHTML = `<div class="rank-item">이번 달엔 아직 스티커가 없어요</div>`;
+    return;
+  }
+
+  const rankCounts = {};
+  top5.forEach(item=> rankCounts[item.rank] = (rankCounts[item.rank]||0) + 1);
+
+  list.innerHTML = top5.map(item=>{
+    const tied = rankCounts[item.rank] > 1;
+    return `
+    <div class="rank-item">
+      <div class="rank-num">${item.rank}</div>
+      <div class="rank-name">${escapeHtml(item.name)}${tied ? ' <span class="rank-tied">공동</span>' : ''}</div>
+      <div class="rank-count">${item.count}개</div>
+    </div>`;
+  }).join("");
+}
+
+/* ---------- 이번 주 요약 ---------- */
+function topTied(countsObj){
+  const entries = Object.entries(countsObj);
+  if(!entries.length) return { names: [], count: 0 };
+  const maxCount = Math.max(...entries.map(([,c])=>c));
+  return { names: entries.filter(([,c])=>c===maxCount).map(([n])=>n), count: maxCount };
+}
+
+/* ---------- 전체 누적 통계 ---------- */
+function renderCumulativeStats(){
+  const receiverCounts = {};
+  const giverCounts = {};
+  Object.values(stickers).forEach(s=>{
+    receiverCounts[s.receiver] = (receiverCounts[s.receiver]||0) + 1;
+    giverCounts[s.giver] = (giverCounts[s.giver]||0) + 1;
+  });
+  const topReceiver = topTied(receiverCounts);
+  const topGiver = topTied(giverCounts);
+
+  const grid = document.getElementById("hofStatsGrid");
+  if(grid){
+    grid.innerHTML = `
+      <div class="week-highlight-card receiver">
+        <div class="wh-icon">👑</div>
+        <div class="wh-label">전체 누적 칭찬왕${topReceiver.names.length > 1 ? " (공동)" : ""}</div>
+        <div class="wh-name">${topReceiver.names.length ? topReceiver.names.map(n=>escapeHtml(n)).join(", ") : "-"}</div>
+        <div class="wh-count">${topReceiver.names.length ? topReceiver.count+"개 받음" : "아직 없어요"}</div>
+      </div>
+      <div class="week-highlight-card giver">
+        <div class="wh-icon">🎁</div>
+        <div class="wh-label">전체 누적 나눔왕${topGiver.names.length > 1 ? " (공동)" : ""}</div>
+        <div class="wh-name">${topGiver.names.length ? topGiver.names.map(n=>escapeHtml(n)).join(", ") : "-"}</div>
+        <div class="wh-count">${topGiver.names.length ? topGiver.count+"개 줌" : "아직 없어요"}</div>
+      </div>
+    `;
+  }
+}
+
+/* ---------- 명예의 전당 ---------- */
+function hofColorIndex(key){
+  let hash = 0;
+  for(const ch of String(key)){ hash = (hash*31 + ch.charCodeAt(0)) % 999999; }
+  return Math.abs(hash) % 6;
+}
+
+function withParticle(word){
+  const lastChar = word[word.length-1];
+  const code = lastChar.charCodeAt(0) - 0xAC00;
+  if(code < 0 || code > 11171) return word + "를";
+  const hasBatchim = (code % 28) !== 0;
+  return word + (hasBatchim ? "을" : "를");
+}
+
+function categorySummaryFor(name, monthKey){
+  if(!monthKey) return null;
+  const counts = {};
+  Object.values(stickers).forEach(s=>{
+    if(s.receiver === name && s.date && s.date.startsWith(monthKey)){
+      counts[s.catId] = (counts[s.catId]||0) + 1;
+    }
+  });
+  const entries = Object.entries(counts);
+  if(!entries.length) return null;
+  entries.sort((a,b)=> b[1]-a[1]);
+  const c = catInfo(entries[0][0]);
+  const label = c.label.replace(/^\S+\s*/, "");
+  return `이번 달엔 ${withParticle(label)} 가장 많이 받았어요`;
+}
+
+function renderHallOfFame(){
+  const entries = Object.entries(hallOfFame);
+
+  const preview = document.getElementById("hofListPreview");
+  if(preview){
+    preview.textContent = entries.length
+      ? entries.map(([id,e])=> `${e.monthLabel} - ${e.name}`).join(", ")
+      : "아직 등록된 기록이 없습니다.";
+  }
+
+  // 같은 달(monthKey 우선, 없으면 monthLabel)끼리 하나의 카드로 묶기
+  const groups = {};
+  entries.forEach(([id,e])=>{
+    const key = e.monthKey || e.monthLabel || "";
+    if(!groups[key]){
+      groups[key] = { monthLabel: e.monthLabel, monthKey: e.monthKey, ts: e.ts||0, items: [] };
+    }
+    groups[key].items.push({ id, name: e.name, count: e.count, monthKey: e.monthKey });
+    if((e.ts||0) > groups[key].ts) groups[key].ts = e.ts;
+  });
+  const groupList = Object.values(groups).sort((a,b)=> (b.ts||0) - (a.ts||0));
+
+  const hofBoard = document.getElementById("hofBoard");
+  if(hofBoard){
+    hofBoard.innerHTML = groupList.length
+      ? groupList.map(g=>{
+          const colorIdx = hofColorIndex(g.monthKey || g.monthLabel || "");
+          const studentsHtml = g.items.map(item=>{
+            const summary = categorySummaryFor(item.name, item.monthKey);
+            return `
+              <div class="hof-student">
+                <div class="hof-name">${escapeHtml(item.name||"")}</div>
+                ${item.count ? `<div class="hof-count">${item.count}개 받음</div>` : ""}
+                ${summary ? `<div class="hof-summary">${escapeHtml(summary)}</div>` : ""}
+                ${isTeacher ? `<button class="hof-del" data-id="${item.id}" title="삭제">✕</button>` : ""}
+              </div>`;
+          }).join("");
+          return `
+          <div class="hof-card pastel-${colorIdx}">
+            <div class="hof-crown">🏆</div>
+            <div class="hof-month">${escapeHtml(g.monthLabel||"")}</div>
+            <div class="hof-students-wrap">${studentsHtml}</div>
+          </div>`;
+        }).join("")
+      : `<div class="hof-empty">아직 명예의 전당에 오른 친구가 없어요. 매달 마지막에 등록해보세요!</div>`;
+
+    hofBoard.querySelectorAll(".hof-del").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        showConfirm("이 기록을 삭제할까요?", ()=>{
+          db.ref("hallOfFame/"+btn.dataset.id).remove();
+        });
+      });
+    });
+  }
+}
+
+function updateHofSuggestion(){
+  const top = lastMonthRanking[0];
+  document.getElementById("hofSuggestName").textContent = top ? top[0] : "-";
+  document.getElementById("hofSuggestCount").textContent = top ? top[1] : 0;
+
+  const monthInput = document.getElementById("hofMonthLabel");
+  if(!monthInput.value){
+    const d = new Date();
+    monthInput.value = `${d.getFullYear()}년 ${d.getMonth()+1}월`;
+  }
+
+  const sel = document.getElementById("hofNameSelect");
+  const names = Object.values(students).sort((a,b)=>a.localeCompare(b,'ko',{numeric:true}));
+  sel.innerHTML = names.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join("");
+  if(top && names.includes(top[0])) sel.value = top[0];
+}
+
+/* ---------- 학기말 리포트 ---------- */
+function updateReportStudentOptions(){
+  const sel = document.getElementById("reportStudentSelect");
+  const names = Object.values(students).sort((a,b)=>a.localeCompare(b,'ko',{numeric:true}));
+  sel.innerHTML = names.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join("");
+}
+
+function buildReportHtml(name){
+  const entries = Object.entries(stickers)
+    .filter(([id,s])=> s.receiver === name)
+    .sort((a,b)=> (b[1].date||"").localeCompare(a[1].date||"") || b[1].ts - a[1].ts);
+
+  const catCounts = {};
+  CATEGORIES.forEach(c=> catCounts[c.id] = 0);
+  entries.forEach(([id,s])=>{ if(catCounts[s.catId] !== undefined) catCounts[s.catId]++; });
+
+  const catSummary = CATEGORIES.map(c => `
+    <div class="report-cat-item">
+      <span>${c.label}</span>
+      <strong>${catCounts[c.id]}개</strong>
+    </div>
+  `).join("");
+
+  const list = entries.length
+    ? entries.map(([id,s])=>{
+        const c = catInfo(s.catId);
+        return `
+          <div class="report-entry">
+            <div class="report-entry-head">
+              <span class="tag ${c.cls}">${c.label}</span>
+              <span class="report-entry-date">${formatDateDisplay(s.date)}</span>
+            </div>
+            <div class="report-entry-msg">${s.msg ? escapeHtml(s.msg) : "따로 남긴 말은 없어요"}</div>
+            <div class="report-entry-giver">- ${escapeHtml(s.giver)}</div>
+          </div>`;
+      }).join("")
+    : `<p style="color:var(--ink-soft); text-align:center;">아직 받은 칭찬이 없어요.</p>`;
+
+  const today = new Date();
+  const dateStr = `${today.getFullYear()}년 ${today.getMonth()+1}월 ${today.getDate()}일`;
+
+  return `
+    <div class="report-header">
+      <h2>${escapeHtml(name)} 칭찬 리포트</h2>
+      <p class="report-date">${dateStr} 기준 · 총 ${entries.length}개</p>
+    </div>
+    <div class="report-cat-summary">${catSummary}</div>
+    <div class="report-list">${list}</div>
+  `;
+}
+
+document.getElementById("reportViewBtn").addEventListener("click", ()=>{
+  const name = document.getElementById("reportStudentSelect").value;
+  if(!name){
+    showToast("학생을 선택해주세요.");
+    return;
+  }
+  document.getElementById("reportContent").innerHTML = buildReportHtml(name);
+  document.getElementById("reportOverlay").classList.add("open");
+});
+document.getElementById("reportPrintBtn").addEventListener("click", ()=>{
+  window.print();
+});
+
+/* ---------- 배경 테마 ---------- */
+function applyTheme(themeId){
+  document.body.className = "theme-" + themeId;
+  document.querySelectorAll(".theme-swatch").forEach(btn=>{
+    btn.classList.toggle("selected", btn.dataset.theme === themeId);
+  });
+}
+
+/* ---------- 선생님 모드 ---------- */
+const loginOverlay = document.getElementById("loginOverlay");
+const teacherOverlay = document.getElementById("teacherOverlay");
+
+document.getElementById("teacherFab").addEventListener("click", ()=>{
+  if(isTeacher){ teacherOverlay.classList.add("open"); }
+  else{ loginOverlay.classList.add("open"); document.getElementById("pwInput").focus(); }
+});
+document.querySelectorAll("[data-close]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.getElementById(btn.dataset.close).classList.remove("open");
+  });
+});
+document.getElementById("pwSubmit").addEventListener("click", tryLogin);
+document.getElementById("pwInput").addEventListener("keydown", e=>{
+  if(e.key === "Enter") tryLogin();
+});
+function tryLogin(){
+  const val = document.getElementById("pwInput").value;
+  if(val === TEACHER_PASSWORD){
+    isTeacher = true;
+    document.getElementById("pwInput").value = "";
+    document.getElementById("pwError").style.display = "none";
+    loginOverlay.classList.remove("open");
+    document.getElementById("teacherFab").textContent = "🖇 선생님 (접속중)";
+    teacherOverlay.classList.add("open");
+    renderBoard();
+    renderHallOfFame();
+  }else{
+    document.getElementById("pwError").style.display = "block";
+  }
+}
+document.getElementById("logoutBtn").addEventListener("click", ()=>{
+  isTeacher = false;
+  document.getElementById("teacherFab").textContent = "🖇 선생님";
+  teacherOverlay.classList.remove("open");
+  renderBoard();
+  renderHallOfFame();
+  showToast("로그아웃했어요.");
+});
+
+/* 탭 전환 */
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-body").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
+    if(btn.dataset.tab === "hof") updateHofSuggestion();
+    if(btn.dataset.tab === "report") updateReportStudentOptions();
+  });
+});
+
+/* 페이지 탭 전환 (칭찬 게시판 / 명예의 전당) */
+document.querySelectorAll(".page-tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".page-tab-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const page = btn.dataset.page;
+    document.getElementById("pageBoard").style.display = page === "board" ? "" : "none";
+    document.getElementById("pageHof").style.display = page === "hof" ? "" : "none";
+    document.getElementById("pageCumulative").style.display = page === "cumulative" ? "" : "none";
+    if(page === "cumulative") renderCumulativeStats();
+  });
+});
+
+/* 명단 저장 */
+document.getElementById("rosterSave").addEventListener("click", ()=>{
+  const lines = document.getElementById("rosterInput").value
+    .split("\n").map(s=>s.trim()).filter(Boolean);
+  if(!lines.length){ showToast("이름을 한 줄에 한 명씩 입력해주세요."); return; }
+  const newStudents = {};
+  lines.forEach(name=>{
+    const id = "s_" + name.replace(/\s+/g,"") + "_" + Math.random().toString(36).slice(2,6);
+    newStudents[id] = name;
+  });
+  db.ref("students").set(newStudents).then(()=>{
+    document.getElementById("rosterInput").value = "";
+    showToast("명단이 저장되었어요!");
+  });
+});
+
+/* 선생님 대신 붙이기 */
+document.getElementById("tDateInput").value = todayStr();
+document.getElementById("tSubmitBtn").addEventListener("click", ()=>{
+  const tReceiverName = document.getElementById("tReceiverInput").value.trim();
+  const tGiverName = document.getElementById("tGiverInput").value.trim();
+  const tDate = document.getElementById("tDateInput").value;
+  const tMsg = document.getElementById("tMsgInput").value.trim();
+  if(!tReceiverName || !tSelectedCat || !tDate){
+    showToast("받는 사람, 항목, 날짜를 확인해주세요.");
+    return;
+  }
+  if(!Object.values(students).includes(tReceiverName)){
+    showToast("받는 사람 이름을 우리반 명단에서 정확히 입력해주세요!");
+    return;
+  }
+  if(!tMsg){
+    showToast("메시지를 적어주세요.");
+    return;
+  }
+  addSticker({
+    giverName: tGiverName || "선생님",
+    receiverName: tReceiverName,
+    catId: tSelectedCat,
+    date: tDate,
+    msg: tMsg
+  });
+  document.getElementById("tMsgInput").value = "";
+  document.getElementById("tDateInput").value = todayStr();
+  document.getElementById("tReceiverInput").value = "";
+  document.getElementById("tGiverInput").value = "";
+  tSelectedCat = null;
+  [...document.querySelectorAll("#tCatGrid .cat-btn")].forEach(b=>b.classList.remove("selected"));
+  showToast("스티커를 붙였어요!");
+});
+
+/* 새 달 시작하기: 지금까지 받은 스티커 숨기기/보이기 */
+document.getElementById("hideAllBtn").addEventListener("click", ()=>{
+  showConfirm("지금까지 받은 스티커를 학생 화면에서 숨길까요? (기록은 남아있어요)", ()=>{
+    db.ref("hiddenBefore").set(Date.now());
+    showToast("지금까지 받은 스티커를 숨겼어요.");
+  });
+});
+document.getElementById("unhideAllBtn").addEventListener("click", ()=>{
+  showConfirm("숨겼던 스티커를 다시 보이게 할까요?", ()=>{
+    db.ref("hiddenBefore").set(0);
+    showToast("숨겼던 스티커를 다시 보이게 했어요.");
+  });
+});
+
+/* 명예의 전당에 올리기 */
+document.getElementById("hofAddBtn").addEventListener("click", ()=>{
+  const name = document.getElementById("hofNameSelect").value;
+  const monthLabel = document.getElementById("hofMonthLabel").value.trim();
+  if(!name || !monthLabel){
+    showToast("학생과 월을 확인해주세요.");
+    return;
+  }
+  const top = lastMonthRanking.find(([n])=> n === name);
+  db.ref("hallOfFame").push({
+    name,
+    monthLabel,
+    monthKey: currentMonthStr(),
+    count: top ? top[1] : null,
+    ts: Date.now()
+  });
+  showToast(`${monthLabel} 명예의 전당에 ${name}(을)를 올렸어요!`);
+});
+
+/* 배경 테마 선택 */
+document.querySelectorAll(".theme-swatch").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    db.ref("theme").set(btn.dataset.theme);
+    showToast("배경을 바꿨어요.");
+  });
+});
+
+/* 전체 초기화 */
+document.getElementById("resetAllBtn").addEventListener("click", ()=>{
+  showConfirm("정말 모든 스티커를 지울까요? 되돌릴 수 없어요.", ()=>{
+    db.ref("stickers").remove();
+    teacherOverlay.classList.remove("open");
+    showToast("모든 스티커를 초기화했어요.");
+  });
+});
+
+initFirebase();
+</script>
+</body>
+</html>
