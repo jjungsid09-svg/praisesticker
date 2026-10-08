@@ -1379,7 +1379,10 @@ function getGrowthStage(count){
   if(count <= 35) return "🌳 칭찬 나무가 튼튼하게 자랐어요.";
   if(count <= 50) return "🌸 칭찬 나무에 꽃이 활짝 폈어요.";
   if(count <= 80) return "🍎 칭찬 나무에 열매가 주렁주렁 열렸어요.";
-  return "🌟 칭찬이 넘쳐나는 최고의 반이에요!";
+  if(count <= 120) return "🧺 칭찬 열매를 바구니 가득 수확했어요.";
+  if(count <= 170) return "🌲 칭찬 나무들이 모여 작은 숲이 되었어요.";
+  if(count <= 250) return "🦋 칭찬 숲에 나비와 새들이 놀러 왔어요.";
+  return "🌈 칭찬이 온 교실에 가득 퍼졌어요! 최고의 반이에요.";
 }
 
 function renderGrowthBanner(){
