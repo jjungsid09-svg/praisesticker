@@ -1668,7 +1668,7 @@ function renderCumulativeStats(){
   const giverCounts = {};
   Object.values(stickers).forEach(s=>{
     receiverCounts[s.receiver] = (receiverCounts[s.receiver]||0) + 1;
-    giverCounts[s.giver] = (giverCounts[s.giver]||0) + 1;
+    if(s.giver !== "선생님") giverCounts[s.giver] = (giverCounts[s.giver]||0) + 1; // 선생님은 나눔왕에서 제외
   });
   const topReceiver = topTied(receiverCounts);
   const topGiver = topTied(giverCounts);
