@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="칭찬 스티커판">
+<meta name="theme-color" content="#6b4226">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%20%22%EC%B9%AD%EC%B0%AC%20%EC%8A%A4%ED%8B%B0%EC%BB%A4%ED%8C%90%22%2C%20%22short_name%22%3A%20%22%EC%B9%AD%EC%B0%AC%EC%8A%A4%ED%8B%B0%EC%BB%A4%22%2C%20%22start_url%22%3A%20%22.%22%2C%20%22display%22%3A%20%22standalone%22%2C%20%22background_color%22%3A%20%22%23a06c3e%22%2C%20%22theme_color%22%3A%20%22%236b4226%22%7D">
 <title>칭찬 스티커판</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -326,7 +332,6 @@
     .no-print{ display:none !important; }
     .report-list{ max-height:none; overflow:visible; }
   }
-
   /* ---- 월말 칭찬 편지 ---- */
   .letter-modal{ max-width:680px; background:#f3efe6; }
   .letter-toolbar{ font-size:12.5px; color:var(--ink-soft); margin:0 0 12px; text-align:center; }
@@ -434,7 +439,6 @@
   }
 
   .panel{
-
     background: var(--paper);
     border-radius: 4px;
     padding: 20px 18px 22px;
@@ -1073,7 +1077,6 @@
       <div class="modal-actions">
         <button class="btn-primary" id="reportViewBtn">리포트 보기</button>
       </div>
-
       <hr style="border:none; border-top:1px dashed #d9cdb4; margin:18px 0 14px;">
       <p class="hint" style="text-align:left;"><strong>💌 월말 칭찬 편지</strong><br>한 달 동안 받은 칭찬을 학생마다 한 장씩 예쁘게 뽑아요.</p>
       <label>월 선택</label>
@@ -1138,14 +1141,25 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
 /* ============================================================
-   미리보기 전용 버전입니다.
-   실제 배포판(다운로드 파일)은 Firebase Realtime Database를 사용해
-   여러 기기에서 데이터를 함께 보지만, 이 미리보기 화면은 외부 서버에
-   연결할 수 없어서 이 브라우저 안에만 임시로 저장돼요.
-   (선생님 모드 비밀번호는 미리보기에서도 동일하게 0521 이에요.)
+   설정: 아래 firebaseConfig를 선생님의 Firebase 프로젝트 값으로
+   바꿔주세요. (짝꿍칠판/글쓰기 앱과 같은 방식으로 새 프로젝트를
+   하나 만들어서 Realtime Database를 사용하시면 됩니다.)
    ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyAsgAtYRcgu0VD9lc_QLWE5mhwk5bc9iPA",
+  authDomain: "praisesticker-b702e.firebaseapp.com",
+  databaseURL: "https://praisesticker-b702e-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "praisesticker-b702e",
+  storageBucket: "praisesticker-b702e.firebasestorage.app",
+  messagingSenderId: "963702443657",
+  appId: "1:963702443657:web:d16e3f9a01b24030ef0058"
+};
+
+// 선생님 모드 비밀번호 - 원하는 값으로 바꿔서 사용하세요.
 const TEACHER_PASSWORD = "0521";
 
 const CATEGORIES = [
@@ -1156,7 +1170,7 @@ const CATEGORIES = [
   { id:"challenge", label:"🚀 도전", cls:"cat-challenge" },
 ];
 
-let db;
+let app, db;
 let students = {};      // id -> name
 let stickers = {};      // id -> {giver, receiver, catId, msg, date, ts}
 let hallOfFame = {};     // id -> {name, monthLabel, ts}
@@ -1195,114 +1209,46 @@ document.getElementById("confirmOkBtn").addEventListener("click", ()=>{
 });
 
 
-/* ---- 미리보기용 가짜 데이터베이스 (localStorage 기반) ---- */
-const PREVIEW_KEY = "praiseStickerPreviewData_v1";
-const previewListeners = { students: [], stickers: [], hallOfFame: [], hiddenBefore: [], theme: [] };
-
-function loadPreviewData(){
-  try{
-    const raw = localStorage.getItem(PREVIEW_KEY);
-    if(raw){
-      const data = JSON.parse(raw);
-      if(!data.hallOfFame) data.hallOfFame = {};
-      if(typeof data.hiddenBefore !== "number") data.hiddenBefore = 0;
-      if(!data.theme) data.theme = "cork";
-      return data;
-    }
-  }catch(e){}
-  const now = Date.now();
-  return {
-    students: { demo1:"김민준", demo2:"이서연", demo3:"박도윤", demo4:"최지우" },
-    stickers: {
-      demo_s1: { giver:"이서연", receiver:"김민준", catId:"care", msg:"내가 준비물을 안 가져왔을 때 같이 나눠줘서 고마웠어", date: new Date(now).toISOString().slice(0,10), ts: now - 3600000 },
-      demo_s2: { giver:"선생님", receiver:"박도윤", catId:"diligent", msg:"1교시부터 6교시까지 한 번도 안 흐트러지고 집중했어요", date: new Date(now - 86400000).toISOString().slice(0,10), ts: now - 7200000 }
-    },
-    hallOfFame: {},
-    hiddenBefore: 0,
-    theme: "cork"
-  };
-}
-let previewData = loadPreviewData();
-
-function savePreviewData(){
-  try{ localStorage.setItem(PREVIEW_KEY, JSON.stringify(previewData)); }catch(e){}
-}
-function notifyPreviewListeners(){
-  previewListeners.students.forEach(cb=> cb({ val: ()=> previewData.students }));
-  previewListeners.stickers.forEach(cb=> cb({ val: ()=> previewData.stickers }));
-  previewListeners.hallOfFame.forEach(cb=> cb({ val: ()=> previewData.hallOfFame }));
-  previewListeners.hiddenBefore.forEach(cb=> cb({ val: ()=> previewData.hiddenBefore }));
-  previewListeners.theme.forEach(cb=> cb({ val: ()=> previewData.theme }));
-}
-
-function makePreviewDb(){
-  return {
-    ref(path){
-      const [key, subId] = path.split("/");
-      return {
-        on(event, cb){
-          previewListeners[key].push(cb);
-          cb({ val: ()=> previewData[key] });
-        },
-        set(value){
-          previewData[key] = value;
-          savePreviewData();
-          notifyPreviewListeners();
-          return Promise.resolve();
-        },
-        push(value){
-          const id = "id_" + Date.now() + "_" + Math.random().toString(36).slice(2,6);
-          if(!previewData[key]) previewData[key] = {};
-          previewData[key][id] = value;
-          savePreviewData();
-          notifyPreviewListeners();
-          return Promise.resolve();
-        },
-        remove(){
-          if(subId){
-            if(previewData[key]) delete previewData[key][subId];
-          }else{
-            previewData[key] = {};
-          }
-          savePreviewData();
-          notifyPreviewListeners();
-          return Promise.resolve();
-        }
-      };
-    }
-  };
-}
-
 function initFirebase(){
-  db = makePreviewDb();
-  document.getElementById("statusHint").textContent = "미리보기 모드 (이 화면에서만 저장돼요)";
-  db.ref("students").on("value", snap=>{
-    students = snap.val() || {};
-    renderRosterDependentUI();
-  });
-  db.ref("stickers").on("value", snap=>{
-    stickers = snap.val() || {};
-    renderBoard();
-    renderRank();
-    renderCumulativeStats();
-    renderGrowthBanner();
-    renderHallOfFame();
-  });
-  db.ref("hallOfFame").on("value", snap=>{
-    hallOfFame = snap.val() || {};
-    renderHallOfFame();
-  });
-  db.ref("hiddenBefore").on("value", snap=>{
-    hiddenBefore = snap.val() || 0;
-    const row = document.getElementById("unhideRow");
-    if(row) row.style.display = hiddenBefore > 0 ? "" : "none";
-    renderBoard();
-    renderRank();
-    renderGrowthBanner();
-  });
-  db.ref("theme").on("value", snap=>{
-    applyTheme(snap.val() || "cork");
-  });
+  try{
+    app = firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    db.ref(".info/connected").on("value", snap=>{
+      document.getElementById("statusHint").textContent =
+        snap.val() ? "연결됨" : "연결 중...";
+    });
+    db.ref("students").on("value", snap=>{
+      students = snap.val() || {};
+      renderRosterDependentUI();
+    });
+    db.ref("stickers").on("value", snap=>{
+      stickers = snap.val() || {};
+      renderBoard();
+      renderRank();
+      renderCumulativeStats();
+      renderGrowthBanner();
+      renderHallOfFame();
+    });
+    db.ref("hallOfFame").on("value", snap=>{
+      hallOfFame = snap.val() || {};
+      renderHallOfFame();
+    });
+    db.ref("hiddenBefore").on("value", snap=>{
+      hiddenBefore = snap.val() || 0;
+      const row = document.getElementById("unhideRow");
+      if(row) row.style.display = hiddenBefore > 0 ? "" : "none";
+      renderBoard();
+      renderRank();
+      renderGrowthBanner();
+    });
+    db.ref("theme").on("value", snap=>{
+      applyTheme(snap.val() || "cork");
+    });
+  }catch(e){
+    document.getElementById("statusHint").textContent =
+      "Firebase 설정이 필요해요 (코드 상단 firebaseConfig 확인)";
+    console.error(e);
+  }
 }
 
 /* ---------- 카테고리 버튼 렌더 ---------- */
@@ -1825,7 +1771,6 @@ document.getElementById("reportViewBtn").addEventListener("click", ()=>{
 document.getElementById("reportPrintBtn").addEventListener("click", ()=>{
   window.print();
 });
-
 
 /* ---------- 월말 칭찬 편지 ---------- */
 const LETTER_ACCENTS = ["#f4a6c1","#8fc7e0","#ffd873","#a8d98a","#c7a8e0","#ffb98a"];
