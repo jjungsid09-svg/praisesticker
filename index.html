@@ -3,12 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="칭찬 스티커판">
-<meta name="theme-color" content="#6b4226">
-<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%20%22%EC%B9%AD%EC%B0%AC%20%EC%8A%A4%ED%8B%B0%EC%BB%A4%ED%8C%90%22%2C%20%22short_name%22%3A%20%22%EC%B9%AD%EC%B0%AC%EC%8A%A4%ED%8B%B0%EC%BB%A4%22%2C%20%22start_url%22%3A%20%22.%22%2C%20%22display%22%3A%20%22standalone%22%2C%20%22background_color%22%3A%20%22%23a06c3e%22%2C%20%22theme_color%22%3A%20%22%236b4226%22%7D">
 <title>칭찬 스티커판</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -333,7 +327,114 @@
     .report-list{ max-height:none; overflow:visible; }
   }
 
+  /* ---- 월말 칭찬 편지 ---- */
+  .letter-modal{ max-width:680px; background:#f3efe6; }
+  .letter-toolbar{ font-size:12.5px; color:var(--ink-soft); margin:0 0 12px; text-align:center; }
+  .letter-page{
+    position:relative;
+    background:#fffefb;
+    border:3px dashed var(--lt, #f4a6c1);
+    border-radius:18px;
+    padding:22px 22px 18px;
+    margin:0 0 16px;
+    break-after:page; page-break-after:always;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .letter-page:last-child{ break-after:auto; page-break-after:auto; margin-bottom:0; }
+  .letter-deco{ position:absolute; font-size:20px; opacity:.85; }
+  .letter-head{ text-align:center; margin-bottom:12px; }
+  .letter-head .l-emoji{ font-size:34px; line-height:1; }
+  .letter-head h2{
+    font-family:'Jua', sans-serif; font-size:22px; color:var(--ink);
+    margin:6px 0 4px; line-height:1.35; word-break:keep-all;
+  }
+  .letter-head h2 span{
+    background: linear-gradient(transparent 58%, var(--lt, #f4a6c1) 58%);
+    padding:0 4px;
+  }
+  .letter-head p{ margin:0; font-size:13px; color:var(--ink-soft); }
+  .letter-chips{ display:flex; justify-content:center; flex-wrap:wrap; gap:6px; margin:12px 0 6px; }
+  .letter-chip{
+    font-size:12px; padding:4px 10px; border-radius:999px; color:var(--ink);
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .letter-chip b{ margin-left:3px; }
+  .letter-chip.zero{ opacity:.35; }
+  .letter-best{
+    text-align:center; font-family:'Jua', sans-serif; font-size:15px;
+    color:var(--ink); margin:8px 0 14px;
+  }
+  .letter-notes{ display:grid; grid-template-columns:1fr 1fr; gap:12px 14px; padding:4px 4px 2px; }
+  .letter-note{
+    border-radius:4px 4px 12px 4px;
+    padding:10px 12px 9px;
+    box-shadow: 1px 2px 0 rgba(0,0,0,.12);
+    border-top:6px solid var(--nd);
+    background:var(--nb);
+    break-inside:avoid; page-break-inside:avoid;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .letter-note:nth-child(odd){ transform:rotate(-0.8deg); }
+  .letter-note:nth-child(even){ transform:rotate(0.8deg); }
+  .letter-note .ln-head{ display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); margin-bottom:5px; }
+  .letter-note .ln-cat{ font-weight:bold; color:var(--ink); }
+  .letter-note .ln-msg{ font-size:13.5px; line-height:1.5; color:var(--ink); word-break:keep-all; overflow-wrap:anywhere; }
+  .letter-note .ln-from{ font-size:11.5px; color:var(--ink-soft); text-align:right; margin-top:5px; }
+  .letter-empty{ text-align:center; color:var(--ink-soft); padding:26px 0; font-size:14px; }
+  .letter-foot{
+    text-align:center; margin-top:18px; font-family:'Jua', sans-serif;
+    font-size:15px; color:var(--ink); line-height:1.6;
+  }
+  .letter-foot small{ display:block; font-family:'Gowun Dodum', sans-serif; font-size:12px; color:var(--ink-soft); }
+  .letter-skip{ font-size:12px; color:var(--ink-soft); text-align:center; margin-top:10px; }
+  .check-row{ display:flex; align-items:center; gap:6px; font-size:13px; margin:10px 0 2px; }
+  .check-row input{ width:auto; margin:0; }
+
+  .letter-sheet{ margin:0 0 16px; }
+  .letter-sheet.two{ display:flex; flex-direction:column; gap:5mm; }
+  .letter-sheet.two .letter-page{ margin:0; }
+  .letter-sheet .letter-page{ margin-bottom:0; }
+  .letter-sheet.two .letter-page + .letter-page{ margin-top:12px; }
+  .letter-page.compact{ padding:12px 16px 10px; border-width:2px; border-radius:14px; }
+  .letter-page.compact .letter-deco{ font-size:15px; }
+  .letter-page.compact .letter-head{ margin-bottom:4px; }
+  .letter-page.compact .l-emoji{ font-size:22px; }
+  .letter-page.compact .letter-head h2{ font-size:18px; margin:2px 0 2px; }
+  .letter-page.compact .letter-head p{ font-size:11.5px; }
+  .letter-page.compact .letter-chips{ margin:7px 0 3px; gap:4px; }
+  .letter-page.compact .letter-chip{ font-size:10.5px; padding:2px 8px; }
+  .letter-page.compact .letter-best{ font-size:12.5px; margin:4px 0 8px; }
+  .letter-page.compact .letter-notes{ gap:7px 10px; padding:2px; }
+  .letter-page.compact .letter-note{ padding:5px 9px 5px; border-top-width:4px; }
+  .letter-page.compact .letter-note .ln-head{ font-size:10px; margin-bottom:2px; }
+  .letter-page.compact .letter-note .ln-msg{ font-size:11.5px; line-height:1.4; }
+  .letter-page.compact .letter-note .ln-from{ font-size:10px; margin-top:2px; }
+  .letter-page.compact .letter-foot{ margin-top:9px; font-size:13px; line-height:1.45; }
+  .letter-page.compact .letter-foot small{ font-size:10px; }
+
+  @page{ size:A4; margin:10mm; }
+  @media print{
+    body.print-letters{ background:#fff !important; }
+    body.print-letters *{ visibility:visible !important; }
+    body.print-letters > *:not(#letterOverlay){ display:none !important; }
+    body.print-letters #letterOverlay{
+      display:block !important; position:static; background:none; padding:0;
+    }
+    body.print-letters .letter-modal{
+      max-width:none; max-height:none; overflow:visible; box-shadow:none;
+      background:#fff; padding:0; border-radius:0;
+    }
+    body.print-letters .no-print{ display:none !important; }
+    body.print-letters .letter-page{ margin:0; border-radius:14px; }
+    body.print-letters .letter-sheet{ margin:0; break-after:page; page-break-after:always; }
+    body.print-letters .letter-sheet:last-child{ break-after:auto; page-break-after:auto; }
+    body.print-letters .letter-sheet.two{ height:274mm; }
+    body.print-letters .letter-sheet.two .letter-page{ flex:1 1 0; min-height:0; margin:0; overflow:hidden; }
+    body.print-letters .letter-sheet .letter-page{ break-after:auto; page-break-after:auto; }
+  }
+
   .panel{
+
     background: var(--paper);
     border-radius: 4px;
     padding: 20px 18px 22px;
@@ -972,6 +1073,22 @@
       <div class="modal-actions">
         <button class="btn-primary" id="reportViewBtn">리포트 보기</button>
       </div>
+
+      <hr style="border:none; border-top:1px dashed #d9cdb4; margin:18px 0 14px;">
+      <p class="hint" style="text-align:left;"><strong>💌 월말 칭찬 편지</strong><br>한 달 동안 받은 칭찬을 학생마다 한 장씩 예쁘게 뽑아요.</p>
+      <label>월 선택</label>
+      <select id="letterMonthSelect"></select>
+      <label>학생 선택</label>
+      <select id="letterStudentSelect"></select>
+      <label>인쇄 방식</label>
+      <select id="letterLayoutSelect">
+        <option value="2">A4 한 장에 2명씩 (종이 절약)</option>
+        <option value="1">A4 한 장에 1명씩 (크게)</option>
+      </select>
+      <label class="check-row"><input type="checkbox" id="letterShowGiver"> 칭찬해 준 친구 이름도 넣기</label>
+      <div class="modal-actions">
+        <button class="btn-primary" id="letterViewBtn">💌 편지 미리보기</button>
+      </div>
     </div>
   </div>
 </div>
@@ -999,6 +1116,18 @@
   </div>
 </div>
 
+<!-- 월말 칭찬 편지 -->
+<div class="modal-overlay" id="letterOverlay">
+  <div class="modal letter-modal">
+    <button class="close-x no-print" data-close="letterOverlay">✕</button>
+    <p class="letter-toolbar no-print" id="letterInfo"></p>
+    <div id="letterContent"></div>
+    <div class="modal-actions no-print" style="margin-top:14px;">
+      <button class="btn-primary" id="letterPrintBtn">🖨 인쇄하기</button>
+    </div>
+  </div>
+</div>
+
 <!-- 학생 카드 전체보기 -->
 <div class="modal-overlay" id="studentDetailOverlay">
   <div class="modal report-modal">
@@ -1009,25 +1138,14 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
 /* ============================================================
-   설정: 아래 firebaseConfig를 선생님의 Firebase 프로젝트 값으로
-   바꿔주세요. (짝꿍칠판/글쓰기 앱과 같은 방식으로 새 프로젝트를
-   하나 만들어서 Realtime Database를 사용하시면 됩니다.)
+   미리보기 전용 버전입니다.
+   실제 배포판(다운로드 파일)은 Firebase Realtime Database를 사용해
+   여러 기기에서 데이터를 함께 보지만, 이 미리보기 화면은 외부 서버에
+   연결할 수 없어서 이 브라우저 안에만 임시로 저장돼요.
+   (선생님 모드 비밀번호는 미리보기에서도 동일하게 0521 이에요.)
    ============================================================ */
-const firebaseConfig = {
-  apiKey: "AIzaSyAsgAtYRcgu0VD9lc_QLWE5mhwk5bc9iPA",
-  authDomain: "praisesticker-b702e.firebaseapp.com",
-  databaseURL: "https://praisesticker-b702e-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "praisesticker-b702e",
-  storageBucket: "praisesticker-b702e.firebasestorage.app",
-  messagingSenderId: "963702443657",
-  appId: "1:963702443657:web:d16e3f9a01b24030ef0058"
-};
-
-// 선생님 모드 비밀번호 - 원하는 값으로 바꿔서 사용하세요.
 const TEACHER_PASSWORD = "0521";
 
 const CATEGORIES = [
@@ -1038,7 +1156,7 @@ const CATEGORIES = [
   { id:"challenge", label:"🚀 도전", cls:"cat-challenge" },
 ];
 
-let app, db;
+let db;
 let students = {};      // id -> name
 let stickers = {};      // id -> {giver, receiver, catId, msg, date, ts}
 let hallOfFame = {};     // id -> {name, monthLabel, ts}
@@ -1077,46 +1195,114 @@ document.getElementById("confirmOkBtn").addEventListener("click", ()=>{
 });
 
 
-function initFirebase(){
+/* ---- 미리보기용 가짜 데이터베이스 (localStorage 기반) ---- */
+const PREVIEW_KEY = "praiseStickerPreviewData_v1";
+const previewListeners = { students: [], stickers: [], hallOfFame: [], hiddenBefore: [], theme: [] };
+
+function loadPreviewData(){
   try{
-    app = firebase.initializeApp(firebaseConfig);
-    db = firebase.database();
-    db.ref(".info/connected").on("value", snap=>{
-      document.getElementById("statusHint").textContent =
-        snap.val() ? "연결됨" : "연결 중...";
-    });
-    db.ref("students").on("value", snap=>{
-      students = snap.val() || {};
-      renderRosterDependentUI();
-    });
-    db.ref("stickers").on("value", snap=>{
-      stickers = snap.val() || {};
-      renderBoard();
-      renderRank();
-      renderCumulativeStats();
-      renderGrowthBanner();
-      renderHallOfFame();
-    });
-    db.ref("hallOfFame").on("value", snap=>{
-      hallOfFame = snap.val() || {};
-      renderHallOfFame();
-    });
-    db.ref("hiddenBefore").on("value", snap=>{
-      hiddenBefore = snap.val() || 0;
-      const row = document.getElementById("unhideRow");
-      if(row) row.style.display = hiddenBefore > 0 ? "" : "none";
-      renderBoard();
-      renderRank();
-      renderGrowthBanner();
-    });
-    db.ref("theme").on("value", snap=>{
-      applyTheme(snap.val() || "cork");
-    });
-  }catch(e){
-    document.getElementById("statusHint").textContent =
-      "Firebase 설정이 필요해요 (코드 상단 firebaseConfig 확인)";
-    console.error(e);
-  }
+    const raw = localStorage.getItem(PREVIEW_KEY);
+    if(raw){
+      const data = JSON.parse(raw);
+      if(!data.hallOfFame) data.hallOfFame = {};
+      if(typeof data.hiddenBefore !== "number") data.hiddenBefore = 0;
+      if(!data.theme) data.theme = "cork";
+      return data;
+    }
+  }catch(e){}
+  const now = Date.now();
+  return {
+    students: { demo1:"김민준", demo2:"이서연", demo3:"박도윤", demo4:"최지우" },
+    stickers: {
+      demo_s1: { giver:"이서연", receiver:"김민준", catId:"care", msg:"내가 준비물을 안 가져왔을 때 같이 나눠줘서 고마웠어", date: new Date(now).toISOString().slice(0,10), ts: now - 3600000 },
+      demo_s2: { giver:"선생님", receiver:"박도윤", catId:"diligent", msg:"1교시부터 6교시까지 한 번도 안 흐트러지고 집중했어요", date: new Date(now - 86400000).toISOString().slice(0,10), ts: now - 7200000 }
+    },
+    hallOfFame: {},
+    hiddenBefore: 0,
+    theme: "cork"
+  };
+}
+let previewData = loadPreviewData();
+
+function savePreviewData(){
+  try{ localStorage.setItem(PREVIEW_KEY, JSON.stringify(previewData)); }catch(e){}
+}
+function notifyPreviewListeners(){
+  previewListeners.students.forEach(cb=> cb({ val: ()=> previewData.students }));
+  previewListeners.stickers.forEach(cb=> cb({ val: ()=> previewData.stickers }));
+  previewListeners.hallOfFame.forEach(cb=> cb({ val: ()=> previewData.hallOfFame }));
+  previewListeners.hiddenBefore.forEach(cb=> cb({ val: ()=> previewData.hiddenBefore }));
+  previewListeners.theme.forEach(cb=> cb({ val: ()=> previewData.theme }));
+}
+
+function makePreviewDb(){
+  return {
+    ref(path){
+      const [key, subId] = path.split("/");
+      return {
+        on(event, cb){
+          previewListeners[key].push(cb);
+          cb({ val: ()=> previewData[key] });
+        },
+        set(value){
+          previewData[key] = value;
+          savePreviewData();
+          notifyPreviewListeners();
+          return Promise.resolve();
+        },
+        push(value){
+          const id = "id_" + Date.now() + "_" + Math.random().toString(36).slice(2,6);
+          if(!previewData[key]) previewData[key] = {};
+          previewData[key][id] = value;
+          savePreviewData();
+          notifyPreviewListeners();
+          return Promise.resolve();
+        },
+        remove(){
+          if(subId){
+            if(previewData[key]) delete previewData[key][subId];
+          }else{
+            previewData[key] = {};
+          }
+          savePreviewData();
+          notifyPreviewListeners();
+          return Promise.resolve();
+        }
+      };
+    }
+  };
+}
+
+function initFirebase(){
+  db = makePreviewDb();
+  document.getElementById("statusHint").textContent = "미리보기 모드 (이 화면에서만 저장돼요)";
+  db.ref("students").on("value", snap=>{
+    students = snap.val() || {};
+    renderRosterDependentUI();
+  });
+  db.ref("stickers").on("value", snap=>{
+    stickers = snap.val() || {};
+    renderBoard();
+    renderRank();
+    renderCumulativeStats();
+    renderGrowthBanner();
+    renderHallOfFame();
+  });
+  db.ref("hallOfFame").on("value", snap=>{
+    hallOfFame = snap.val() || {};
+    renderHallOfFame();
+  });
+  db.ref("hiddenBefore").on("value", snap=>{
+    hiddenBefore = snap.val() || 0;
+    const row = document.getElementById("unhideRow");
+    if(row) row.style.display = hiddenBefore > 0 ? "" : "none";
+    renderBoard();
+    renderRank();
+    renderGrowthBanner();
+  });
+  db.ref("theme").on("value", snap=>{
+    applyTheme(snap.val() || "cork");
+  });
 }
 
 /* ---------- 카테고리 버튼 렌더 ---------- */
@@ -1640,6 +1826,142 @@ document.getElementById("reportPrintBtn").addEventListener("click", ()=>{
   window.print();
 });
 
+
+/* ---------- 월말 칭찬 편지 ---------- */
+const LETTER_ACCENTS = ["#f4a6c1","#8fc7e0","#ffd873","#a8d98a","#c7a8e0","#ffb98a"];
+const CAT_TINT = {
+  teamwork:["#e6f4fa","#4f9ab8"], care:["#fde9f0","#d9739a"], kind:["#fff6d6","#e0a83a"],
+  diligent:["#eef8e6","#6fae4c"], challenge:["#f3eaf9","#9269bb"]
+};
+const CAT_CHIP = { teamwork:"#cfe8f3", care:"#fbd3e1", kind:"#ffeba8", diligent:"#d3ecc0", challenge:"#e2d0f0" };
+
+function updateLetterOptions(){
+  const msel = document.getElementById("letterMonthSelect");
+  const months = new Set([currentMonthStr()]);
+  Object.values(stickers).forEach(s=>{ if(s.date && s.date.length>=7) months.add(s.date.slice(0,7)); });
+  const list = [...months].sort().reverse();
+  const prev = msel.value;
+  msel.innerHTML = list.map(m=>{
+    const [y,mm] = m.split("-");
+    return `<option value="${m}">${y}년 ${parseInt(mm,10)}월</option>`;
+  }).join("");
+  if(prev && list.includes(prev)) msel.value = prev;
+  const ssel = document.getElementById("letterStudentSelect");
+  const prevS = ssel.value;
+  const names = Object.values(students).sort((a,b)=>a.localeCompare(b,'ko',{numeric:true}));
+  ssel.innerHTML = `<option value="__all__">👨‍👩‍👧‍👦 전체 학생 (한 번에 인쇄)</option>` +
+    names.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join("");
+  if(prevS && (prevS==="__all__" || names.includes(prevS))) ssel.value = prevS;
+}
+
+function buildLetterHtml(name, monthKey, showGiver, idx, compact){
+  const month = parseInt(monthKey.split("-")[1],10);
+  const entries = Object.values(stickers)
+    .filter(s=> s.receiver === name && s.date && s.date.startsWith(monthKey))
+    .sort((a,b)=> (a.date||"").localeCompare(b.date||"") || (a.ts||0)-(b.ts||0));
+  const accent = LETTER_ACCENTS[idx % LETTER_ACCENTS.length];
+  const counts = {};
+  CATEGORIES.forEach(c=>counts[c.id]=0);
+  entries.forEach(s=>{ if(counts[s.catId]!==undefined) counts[s.catId]++; });
+
+  const chips = CATEGORIES.map(c=>`
+    <span class="letter-chip ${counts[c.id]?"":"zero"}" style="background:${CAT_CHIP[c.id]||"#eee"}">${c.label}<b>${counts[c.id]}</b></span>`).join("");
+
+  let best = "";
+  const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+  if(top && top[1]>0){
+    const label = catInfo(top[0]).label.replace(/^\S+\s*/, "");
+    best = `${month}월엔 '${label}' 칭찬을 가장 많이 받았어요 🎉`;
+  }
+
+  const notes = entries.map(s=>{
+    const c = catInfo(s.catId);
+    const t = CAT_TINT[s.catId] || ["#f5f5f5","#999"];
+    const d = s.date ? s.date.split("-") : [];
+    const dateTxt = d.length===3 ? `${parseInt(d[1],10)}월 ${parseInt(d[2],10)}일` : "";
+    return `
+      <div class="letter-note" style="--nb:${t[0]}; --nd:${t[1]}">
+        <div class="ln-head"><span class="ln-cat">${c.label}</span><span>${dateTxt}</span></div>
+        <div class="ln-msg">${s.msg ? escapeHtml(s.msg) : "따로 남긴 말은 없어요"}</div>
+        ${showGiver ? `<div class="ln-from">- ${escapeHtml(s.giver)} -</div>` : ""}
+      </div>`;
+  }).join("");
+
+  return `
+    <section class="letter-page${compact?" compact":""}" style="--lt:${accent}">
+      <span class="letter-deco" style="top:10px; left:14px;">⭐</span>
+      <span class="letter-deco" style="top:12px; right:16px;">🌈</span>
+      <div class="letter-head">
+        <div class="l-emoji">💌</div>
+        <h2><span>${escapeHtml(name)}</span>에게 온 ${month}월의 칭찬 편지</h2>
+        <p>친구들이 붙여 준 칭찬 스티커 <strong>${entries.length}개</strong>가 도착했어요!</p>
+      </div>
+      <div class="letter-chips">${chips}</div>
+      ${best ? `<div class="letter-best">${best}</div>` : ""}
+      <div class="letter-notes">${notes}</div>
+      <div class="letter-foot">
+        ${month}월에도 반짝반짝 빛나 줘서 고마워요 ✨
+        <small>다음 달에도 따뜻한 칭찬을 가득 모아 봐요 · 담임선생님이</small>
+      </div>
+    </section>`;
+}
+
+document.getElementById("letterViewBtn").addEventListener("click", ()=>{
+  const monthKey = document.getElementById("letterMonthSelect").value;
+  const pick = document.getElementById("letterStudentSelect").value;
+  const showGiver = document.getElementById("letterShowGiver").checked;
+  if(!monthKey || !pick){ showToast("월과 학생을 선택해주세요."); return; }
+  const month = parseInt(monthKey.split("-")[1],10);
+  const names = pick==="__all__"
+    ? Object.values(students).sort((a,b)=>a.localeCompare(b,'ko',{numeric:true}))
+    : [pick];
+  const withData = names.filter(n=> Object.values(stickers).some(s=>s.receiver===n && s.date && s.date.startsWith(monthKey)));
+  const skipped = names.filter(n=>!withData.includes(n));
+  let targets = pick==="__all__" ? withData : names;
+  if(!targets.length){ showToast(`${month}월에 받은 칭찬이 아직 없어요.`); return; }
+  const perPage = document.getElementById("letterLayoutSelect").value === "2" ? 2 : 1;
+  const MAX_COMPACT = 8; // 반 장에 들어가는 칭찬 개수 (넘으면 한 장 전체 사용)
+  const countOf = n => Object.values(stickers).filter(s=>s.receiver===n && s.date && s.date.startsWith(monthKey)).length;
+  let body = "", sheets = 0, bigOnes = [];
+  if(perPage === 1){
+    body = targets.map((n,i)=>buildLetterHtml(n, monthKey, showGiver, i, false)).join("");
+    sheets = targets.length;
+  } else {
+    let buf = [];
+    const flush = ()=>{
+      if(!buf.length) return;
+      body += `<div class="letter-sheet ${buf.length===2?"two":""}">` + buf.map(b=>b.html).join("") + `</div>`;
+      sheets++; buf = [];
+    };
+    targets.forEach((n,i)=>{
+      if(countOf(n) > MAX_COMPACT){
+        flush();
+        body += `<div class="letter-sheet">${buildLetterHtml(n, monthKey, showGiver, i, false)}</div>`;
+        sheets++; bigOnes.push(n);
+      } else {
+        buf.push({html: buildLetterHtml(n, monthKey, showGiver, i, true)});
+        if(buf.length === 2) flush();
+      }
+    });
+    flush();
+  }
+  document.getElementById("letterContent").innerHTML = body +
+    (pick==="__all__" && skipped.length
+      ? `<div class="letter-skip no-print">받은 칭찬이 없어 제외된 친구: ${skipped.map(escapeHtml).join(", ")}</div>` : "") +
+    (bigOnes.length
+      ? `<div class="letter-skip no-print">칭찬이 ${MAX_COMPACT}개보다 많은 친구는 한 장을 다 써요: ${bigOnes.map(escapeHtml).join(", ")}</div>` : "");
+  document.getElementById("letterInfo").textContent =
+    `${month}월 편지 ${targets.length}명 · A4 ${sheets}장으로 인쇄돼요`;
+  document.getElementById("letterOverlay").classList.add("open");
+  document.querySelector("#letterOverlay .modal").scrollTop = 0;
+});
+document.getElementById("letterPrintBtn").addEventListener("click", ()=>{
+  document.body.classList.add("print-letters");
+  const done = ()=>{ document.body.classList.remove("print-letters"); window.removeEventListener("afterprint", done); };
+  window.addEventListener("afterprint", done);
+  try{ window.print(); }catch(e){ done(); }
+});
+
 /* ---------- 배경 테마 ---------- */
 function applyTheme(themeId){
   document.body.className = "theme-" + themeId;
@@ -1697,7 +2019,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
     btn.classList.add("active");
     document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
     if(btn.dataset.tab === "hof") updateHofSuggestion();
-    if(btn.dataset.tab === "report") updateReportStudentOptions();
+    if(btn.dataset.tab === "report"){ updateReportStudentOptions(); updateLetterOptions(); }
   });
 });
 
