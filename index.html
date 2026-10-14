@@ -489,6 +489,10 @@
   .letter-page.compact .letter-note{ padding:5px 9px 5px; }
   .letter-page.compact .letter-note .ln-head{ font-size:10px; margin-bottom:2px; }
   .letter-page.compact .letter-note .ln-msg{ font-size:11.5px; line-height:1.4; }
+  /* ---- 2명씩 인쇄: 남는 한 명은 반 장, 칭찬 많은 친구는 내용만큼만 (아래는 비워둬요) ---- */
+  .letter-sheet.half .letter-page{ height:123.5mm; }
+  .letter-sheet.tall .letter-page{ height:auto; }
+  .letter-sheet.tall .letter-foot{ min-height:28mm; display:flex; flex-direction:column; justify-content:flex-end; }
   .modal.letter-modal{ max-width:calc(190mm + 48px); width:calc(190mm + 48px); }
   @media (max-width:820px){ .modal.letter-modal{ width:100%; } }
   @page{ size:A4; margin:10mm; }
@@ -1967,7 +1971,7 @@ document.getElementById("letterViewBtn").addEventListener("click", ()=>{
     let buf = [];
     const flush = ()=>{
       if(!buf.length) return;
-      body += `<div class="letter-sheet ${buf.length===2?"two":"one"}">` + buf.map(b=>b.html).join("") + `</div>`;
+      body += `<div class="letter-sheet ${buf.length===2?"two":"half"}">` + buf.map(b=>b.html).join("") + `</div>`;
       sheets++; buf = [];
     };
     // 반 장짜리(칭찬 적은 친구)를 먼저 둘씩 묶고, 한 장짜리(많은 친구)는 뒤에 따로 뽑아요 (종이 절약)
@@ -1979,7 +1983,7 @@ document.getElementById("letterViewBtn").addEventListener("click", ()=>{
     });
     flush();
     bigs.forEach((n,i)=>{
-      body += `<div class="letter-sheet one">${buildLetterHtml(n, monthKey, showGiver, smalls.length+i, true)}</div>`;
+      body += `<div class="letter-sheet tall">${buildLetterHtml(n, monthKey, showGiver, smalls.length+i, true)}</div>`;
       sheets++; bigOnes.push(n);
     });
   }
@@ -1988,7 +1992,7 @@ document.getElementById("letterViewBtn").addEventListener("click", ()=>{
     (pick==="__all__" && skipped.length
       ? `<div class="letter-skip no-print">받은 칭찬이 없어 제외된 친구: ${skipped.map(escapeHtml).join(", ")}</div>` : "") +
     (bigOnes.length
-      ? `<div class="letter-skip no-print">칭찬이 많아 반 장에 안 들어가는 친구는 한 장을 다 써서 맨 뒤에 모아 뽑아요: ${bigOnes.map(escapeHtml).join(", ")}</div>` : "");
+      ? `<div class="letter-skip no-print">칭찬이 많아 반 장에 안 들어가는 친구는 내용만큼만 쓰고 맨 뒤에 모아 뽑아요: ${bigOnes.map(escapeHtml).join(", ")}</div>` : "");
   document.getElementById("letterInfo").textContent =
     `${month}월 편지 ${targets.length}명 · A4 ${sheets}장으로 인쇄돼요`;
   document.getElementById("letterOverlay").classList.add("open");
